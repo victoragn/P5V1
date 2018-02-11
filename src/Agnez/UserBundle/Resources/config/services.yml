@@ -1,0 +1,4 @@
+services:
+#    agnez_user.example:
+#        class: Agnez\UserBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

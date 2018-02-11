@@ -1,0 +1,53 @@
+{# src/AppBundle/Resources/views/layout.html.twig #}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}Gestion de classe{% endblock %}</title>
+
+    {% block stylesheets %}{# On charge le CSS de bootstrap depuis le site directement #}
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    {% endblock %}
+  </head>
+
+  <body>
+  <div id="mainContainer">
+      <div id="header" class="">
+          <div class="col-xs-3"><a href="{{ path('agnez_core_homepage') }}"><h1>Gestion de classe</h1></a></div>
+          <div class="col-xs-9">
+              {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                <ul>
+                    <li>Connecté en tant que {{ app.user.username }}</li>
+                    <li><a href="{{ path('fos_user_profile_show') }}">Voir le profil</a></li>
+                    <li><a href="{{ path('fos_user_security_logout') }}">Se deconnecter</a></li>
+                </ul>
+              {% else %}
+                <ul>
+                    <li>Veuillez vous connecter ou creez un compte :</li>
+                    <li><a href="{{ path('fos_user_security_login') }}">Connexion</a></li>
+                    <li><a href="{{ path('fos_user_registration_register') }}">Creer un compte</a></li>
+                </ul>
+              {% endif %}
+          </div>
+      </div>
+
+    <div class="content">
+        {% block body %}
+        {% endblock %}
+    </div>
+
+    <footer>
+      <p>The sky's the limit © {{ 'now'|date('Y') }} and beyond.</p>
+    </footer>
+  </div>
+
+  {% block javascripts %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  {% endblock %}
+
+  </body>
+</html>
