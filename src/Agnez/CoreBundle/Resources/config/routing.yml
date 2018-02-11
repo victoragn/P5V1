@@ -1,4 +1,1 @@
-agnez_core_homepage:
-    path:     /
-    defaults:
-        _controller: AgnezCoreBundle:Default:index
+

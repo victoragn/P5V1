@@ -1,3 +1,7 @@
+agnez_core_anno:
+    resource: "@AgnezCoreBundle/Controller/DefaultController.php"
+    type:     annotation
+
 agnez_core:
     resource: "@AgnezCoreBundle/Resources/config/routing.yml"
     prefix:   /
