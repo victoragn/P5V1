@@ -3,6 +3,7 @@
 namespace Agnez\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * EdtHeure
@@ -36,5 +37,22 @@ class EdtHeure
     {
         return $this->id;
     }
+
+    public function __construct(){
+        $this->events = new ArrayCollection();
+    }
+
+    public function addEvent(Event $event){
+        $this->events[] = $event;
+    }
+
+    public function removeEvent(Event $event){
+        $this->events->removeElement($event);
+    }
+
+    public function getApplications(){
+        return $this->applications;
+    }
+
 }
 
