@@ -27,6 +27,12 @@ class EdtHeure
      */
     private $id;
 
+    /**
+    *@var datetime
+    *@ORM\Column(type="datetime", name="dateDebut")
+    */
+    private $dateDebut;
+
 
     /**
      * Get id
