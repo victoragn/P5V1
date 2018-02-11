@@ -1,0 +1,134 @@
+<?php
+
+namespace Agnez\CoreBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Eleve
+ *
+ * @ORM\Table(name="agnez_eleve")
+ * @ORM\Entity(repositoryClass="Agnez\CoreBundle\Repository\EleveRepository")
+ */
+class Eleve
+{
+    /**
+     * @ORM\ManyToOne(targetEntity="Agnez\CoreBundle\Entity\Classe")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $classe;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom", type="string", length=255)
+     */
+    private $nom;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="prenom", type="string", length=255)
+     */
+    private $prenom;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="arrayPlaces", type="array", nullable=true)
+     */
+    private $arrayPlaces;
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set nom
+     *
+     * @param string $nom
+     *
+     * @return Eleve
+     */
+    public function setNom($nom)
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    /**
+     * Get nom
+     *
+     * @return string
+     */
+    public function getNom()
+    {
+        return $this->nom;
+    }
+
+    /**
+     * Set prenom
+     *
+     * @param string $prenom
+     *
+     * @return Eleve
+     */
+    public function setPrenom($prenom)
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    /**
+     * Get prenom
+     *
+     * @return string
+     */
+    public function getPrenom()
+    {
+        return $this->prenom;
+    }
+
+    /**
+     * Set arrayPlaces
+     *
+     * @param array $arrayPlaces
+     *
+     * @return Eleve
+     */
+    public function setArrayPlaces($arrayPlaces)
+    {
+        $this->arrayPlaces = $arrayPlaces;
+
+        return $this;
+    }
+
+    /**
+     * Get arrayPlaces
+     *
+     * @return array
+     */
+    public function getArrayPlaces()
+    {
+        return $this->arrayPlaces;
+    }
+}
+
