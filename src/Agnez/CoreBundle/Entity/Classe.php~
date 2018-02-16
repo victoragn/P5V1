@@ -68,28 +68,5 @@ class Classe
     {
         return $this->name;
     }
-
-    /**
-     * Set user
-     *
-     * @param \Agnez\UserBundle\Entity\User $user
-     *
-     * @return Classe
-     */
-    public function setUser(\Agnez\UserBundle\Entity\User $user)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return \Agnez\UserBundle\Entity\User
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
 }
+

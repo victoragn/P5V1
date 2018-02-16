@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * EdtHeure
  *
- * @ORM\Table(name="edt_heure")
+ * @ORM\Table(name="agnez_edt_heure")
  * @ORM\Entity(repositoryClass="Agnez\CoreBundle\Repository\EdtHeureRepository")
  */
 class EdtHeure

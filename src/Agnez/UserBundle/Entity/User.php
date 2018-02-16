@@ -23,9 +23,9 @@ class User extends BaseUser
     /**
      * @var boolean
      *
-     * @ORM\Column(name="initialized", type="boolean", options={"default":false})
+     * @ORM\Column(name="initialized", type="boolean")
      */
-    private $initialized; /*vaut false tant que l'on a pas créé les edtHeures grace à hebdoEDT*/
+    private $initialized=0; /*vaut false tant que l'on a pas créé les edtHeures grace à hebdoEDT*/
 
 
     /**

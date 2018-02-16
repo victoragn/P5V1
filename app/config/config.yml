@@ -30,6 +30,8 @@ framework:
     assets: ~
     php_errors:
         log: true
+    templating:
+        engines: ['twig']
 
 # Twig Configuration
 twig:
@@ -75,3 +77,12 @@ fos_user:
     from_email:
         address: "%mailer_user%"
         sender_name: "%mailer_user%"
+
+assetic:
+  debug:          '%kernel.debug%'
+  use_controller: '%kernel.debug%'
+  filters:
+    cssrewrite: ~
+    jsqueeze:   ~
+    scssphp:
+      formatter: 'Leafo\ScssPhp\Formatter\Compressed'

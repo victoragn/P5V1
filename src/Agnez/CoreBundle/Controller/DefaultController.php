@@ -6,6 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Agnez\CoreBundle\Form\ClasseType;
+use Agnez\CoreBundle\Entity\Classe;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class DefaultController extends Controller{
      /**
@@ -24,7 +27,31 @@ class DefaultController extends Controller{
      /**
      * @Route("/classes", name="agnez_core_classes")
      */
-    public function gestionClassesAction(){
-        return $this->render('@AgnezCore/Default/classes.html.twig');
+    public function gestionClassesAction(Request $request){
+        $repository = $this
+          ->getDoctrine()
+          ->getManager()
+          ->getRepository('AgnezCoreBundle:Classe');
+        $classes=$repository->findByUser( $this->getUser() );
+        $classe= $classes[0];
+        /*$classe->setUser( $this->getUser() );*/
+        $form = $this
+            ->createForm(ClasseType::class,$classe)
+            ->add('save', SubmitType::class);
+
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($classe);
+                $em->flush();
+
+                $request->getSession()->getFlashBag()->add('notice', 'Classe bien enregistrée.');
+            }
+        }
+        return $this->render('@AgnezCore/Classes/classes.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 }
