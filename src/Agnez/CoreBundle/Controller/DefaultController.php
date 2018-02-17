@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Agnez\CoreBundle\Form\ClasseType;
 use Agnez\CoreBundle\Entity\Classe;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use DateTime;
 use DatePeriod;
 use DateInterval;
@@ -42,10 +44,13 @@ class DefaultController extends Controller{
           ->getManager()
           ->getRepository('AgnezCoreBundle:Classe');
         $classes=$repository->findByUser( $this->getUser() );
-        $form = $this->createForm(ClasseType::class,$classe);
-        /*foreach($classes as $classe){
-        $form->add()
-        }*/
+
+        $form = $this->createForm(FormType::class, $classes)
+            ->add('classes', CollectionType::class, array(
+                'entry_type' => ClasseType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+        ));
         $form->add('save', SubmitType::class);
 
         if ($request->isMethod('POST')) {
@@ -53,7 +58,7 @@ class DefaultController extends Controller{
 
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($classe);
+                $em->persist($classes);
                 $em->flush();
 
                 $request->getSession()->getFlashBag()->add('notice', 'Classe bien enregistrée.');
