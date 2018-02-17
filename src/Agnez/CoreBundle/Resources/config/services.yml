@@ -1,4 +1,7 @@
 services:
+    agnez_core.servicedate:
+        class : Agnez\CoreBundle\ServiceDate\AgnezServiceDate
+        arguments :  ['2017-09-04']
 #    agnez_core.example:
 #        class: Agnez\CoreBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]

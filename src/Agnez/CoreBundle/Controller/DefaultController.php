@@ -9,6 +9,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Agnez\CoreBundle\Form\ClasseType;
 use Agnez\CoreBundle\Entity\Classe;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use DateTime;
+use DatePeriod;
+use DateInterval;
 
 class DefaultController extends Controller{
      /**
@@ -19,7 +22,13 @@ class DefaultController extends Controller{
         if (!$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirectToRoute('fos_user_security_login');
         }else{
-            return $this->render('@AgnezCore/Default/index.html.twig');
+            $date=new \DateTime('2017-09-07 16:05:00');
+
+            $servicedate = $this->container->get('agnez_core.servicedate');
+            $numSem=$servicedate->numSem($date);
+            $numHeure=$servicedate->numHeure($date);
+
+            return $this->render('@AgnezCore/Default/index.html.twig', array('numSem' => $numSem, 'numHeure' => $numHeure ));
         }
 
     }
@@ -33,11 +42,11 @@ class DefaultController extends Controller{
           ->getManager()
           ->getRepository('AgnezCoreBundle:Classe');
         $classes=$repository->findByUser( $this->getUser() );
-        $classe= $classes[0];
-        /*$classe->setUser( $this->getUser() );*/
-        $form = $this
-            ->createForm(ClasseType::class,$classe)
-            ->add('save', SubmitType::class);
+        $form = $this->createForm(ClasseType::class,$classe);
+        /*foreach($classes as $classe){
+        $form->add()
+        }*/
+        $form->add('save', SubmitType::class);
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
