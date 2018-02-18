@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Agnez\CoreBundle\Form\ClasseType;
 use Agnez\CoreBundle\Form\FormulaireType;
+use Agnez\UserBundle\Form\UserType;
 use Agnez\CoreBundle\Entity\Classe;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -40,11 +41,11 @@ class DefaultController extends Controller{
      * @Route("/classes", name="agnez_core_classes")
      */
     public function gestionClassesAction(Request $request){
-        $repository = $this
+        /*$repository = $this
           ->getDoctrine()
           ->getManager()
           ->getRepository('AgnezCoreBundle:Classe');
-        $classes=$repository->findByUser( $this->getUser() );
+        $classes=$repository->findByUser( $this->getUser() );*/
 
         /*$form = $this->createForm(FormType::class, $classes)
             ->add('classes', CollectionType::class, array(
@@ -54,19 +55,21 @@ class DefaultController extends Controller{
         ));
         $form->add('save', SubmitType::class);*/
 
+        $user = $this->getUser();
+        $form=$this->createForm(UserType::class,$user);
 
-        $form=$this->createForm(FormulaireType::class , $classes);
-        /*if ($request->isMethod('POST')) {
+        //$form=$this->createForm(FormulaireType::class , $classes);
+        if ($request->isMethod('POST')) {
             $form->handleRequest($request);
 
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($classe);
+                $em->persist($user);
                 $em->flush();
 
-                $request->getSession()->getFlashBag()->add('notice', 'Classe bien enregistrée.');
+                $request->getSession()->getFlashBag()->add('notice', 'User bien enregistré.');
             }
-        }*/
+        }
         return $this->render('@AgnezCore/Classes/classes.html.twig', array(
             'form' => $form->createView(),
         ));

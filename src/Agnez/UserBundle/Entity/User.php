@@ -36,7 +36,7 @@ class User extends BaseUser
     private $hebdoEDT;
 
     /**
-     * @ORM\OneToMany(targetEntity="Agnez\CoreBundle\Entity\Classe", mappedBy="User")
+     * @ORM\OneToMany(targetEntity="Agnez\CoreBundle\Entity\Classe", mappedBy="user")
      */
     private $classes;
 

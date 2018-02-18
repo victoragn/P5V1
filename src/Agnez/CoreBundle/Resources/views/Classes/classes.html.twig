@@ -4,13 +4,8 @@
 
   La gestion des classes
 
-    {{ form_start(form) }}
-
-    <ul class="classes">
-        {% for classe in form.classes %}
-            <li>{{ form_row(classe.name) }}</li>
-        {% endfor %}
-    </ul>
+{{ form_start(form) }}
+{{ form_row(form.classes) }}
 {{ form_end(form) }}
 
 {% endblock %}
