@@ -20,8 +20,10 @@ class UserType extends AbstractType
         $builder
             ->add('classes',         CollectionType::class,array(
                 'entry_type'        => ClasseType::class,
+                'label'             => 'Classes enregistrées',
                 'allow_add'         => true,
-                'allow_delete'      => true
+                'allow_delete'      => true,
+                'by_reference'      => false,
             ))
             ->add('Envoyer',      SubmitType::class);
     }/**

@@ -6,6 +6,61 @@
 
 {{ form_start(form) }}
 {{ form_row(form.classes) }}
+<a href="#" id="add_classe" class="btn btn-default">Ajouter une classe</a>
 {{ form_end(form) }}
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    var $container = $('div#agnez_userbundle_user_classes');
+
+    var index = $container.find(':input').length;
+
+    $('#add_classe').click(function(e) {
+      addClasse($container);
+
+      e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+      return false;
+    });
+
+    // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
+    if (index == 0) {
+      addClasse($container);
+    } else {
+      $container.children('div').each(function() {
+        addDeleteLink($(this));
+      });
+    }
+
+    function addClasse($container) {
+      // Dans le contenu de l'attribut « data-prototype », on remplace :
+      // - le texte "__name__label__" qu'il contient par le label du champ
+      // - le texte "__name__" qu'il contient par le numéro du champ
+      var template = $container.attr('data-prototype')
+        .replace(/__name__label__/g, 'Classe n°' + (index+1))
+        .replace(/__name__/g,        index)
+      ;
+
+      // On crée un objet jquery qui contient ce template
+      var $prototype = $(template);
+
+      addDeleteLink($prototype);
+      $container.append($prototype);
+      index++;
+    }
+
+    // La fonction qui ajoute un lien de suppression d'une catégorie
+    function addDeleteLink($prototype) {
+      var $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
+      $prototype.append($deleteLink);
+      $deleteLink.click(function(e) {
+        $prototype.remove();
+        e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+        return false;
+      });
+    }
+  });
+</script>
 
 {% endblock %}
