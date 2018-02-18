@@ -13,6 +13,8 @@ use Agnez\CoreBundle\Entity\Classe;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use DateTime;
 use DatePeriod;
 use DateInterval;
@@ -41,29 +43,26 @@ class DefaultController extends Controller{
      * @Route("/classes", name="agnez_core_classes")
      */
     public function gestionClassesAction(Request $request){
-        /*$repository = $this
-          ->getDoctrine()
-          ->getManager()
-          ->getRepository('AgnezCoreBundle:Classe');
-        $classes=$repository->findByUser( $this->getUser() );*/
-
-        /*$form = $this->createForm(FormType::class, $classes)
-            ->add('classes', CollectionType::class, array(
-                'entry_type' => ClasseType::class,
-                'allow_add' => true,
-                'allow_delete' => true,
-        ));
-        $form->add('save', SubmitType::class);*/
-
         $user = $this->getUser();
+        $originalClasses = new ArrayCollection();
+        foreach ($user->getClasses() as $classe) {
+            $originalClasses->add($classe);
+        }
         $form=$this->createForm(UserType::class,$user);
 
-        //$form=$this->createForm(FormulaireType::class , $classes);
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
 
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
+
+                foreach ($originalClasses as $classe) {
+                    if (false === $user->getClasses()->contains($classe)) {
+                        $em->remove($classe);
+                    }
+                }
+
+
                 $em->persist($user);
                 $em->flush();
 
@@ -74,4 +73,24 @@ class DefaultController extends Controller{
             'form' => $form->createView(),
         ));
     }
+
+    /**
+     * @Route("/classes/edit", name="agnez_core_editClasses")
+     */
+    /*public function editClasseAction(Request $request){
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+
+
+
+            $em->persist($user);
+            $em->flush();
+
+            // redirect back to some edit page
+            return $this->redirectToRoute('agnez_core_classes');
+        }
+
+        // render some form template
+    }*/
+
 }
