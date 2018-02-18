@@ -35,4 +35,91 @@ class User extends BaseUser
      */
     private $hebdoEDT;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Agnez\CoreBundle\Entity\Classe", mappedBy="User")
+     */
+    private $classes;
+
+
+    /**
+     * Set initialized
+     *
+     * @param boolean $initialized
+     *
+     * @return User
+     */
+    public function setInitialized($initialized)
+    {
+        $this->initialized = $initialized;
+
+        return $this;
+    }
+
+    /**
+     * Get initialized
+     *
+     * @return boolean
+     */
+    public function getInitialized()
+    {
+        return $this->initialized;
+    }
+
+    /**
+     * Set hebdoEDT
+     *
+     * @param array $hebdoEDT
+     *
+     * @return User
+     */
+    public function setHebdoEDT($hebdoEDT)
+    {
+        $this->hebdoEDT = $hebdoEDT;
+
+        return $this;
+    }
+
+    /**
+     * Get hebdoEDT
+     *
+     * @return array
+     */
+    public function getHebdoEDT()
+    {
+        return $this->hebdoEDT;
+    }
+
+    /**
+     * Add class
+     *
+     * @param \Agnez\CoreBundle\Entity\Classe $class
+     *
+     * @return User
+     */
+    public function addClass(\Agnez\CoreBundle\Entity\Classe $class)
+    {
+        $this->classes[] = $class;
+
+        return $this;
+    }
+
+    /**
+     * Remove class
+     *
+     * @param \Agnez\CoreBundle\Entity\Classe $class
+     */
+    public function removeClass(\Agnez\CoreBundle\Entity\Classe $class)
+    {
+        $this->classes->removeElement($class);
+    }
+
+    /**
+     * Get classes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getClasses()
+    {
+        return $this->classes;
+    }
 }

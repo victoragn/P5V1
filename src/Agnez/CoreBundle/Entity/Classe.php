@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Classe
 {
     /**
-     * @ORM\ManyToOne(targetEntity="Agnez\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="Agnez\UserBundle\Entity\User", inversedBy="classes")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
