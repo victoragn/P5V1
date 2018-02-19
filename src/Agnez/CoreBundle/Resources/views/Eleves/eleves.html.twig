@@ -4,16 +4,12 @@
 
   La gestion des classes
 
-    {{ form_start(form) }}
-
     <ul class="classes">
-        {% for classe in form.classes %}
-            <li>{{ form_row(classe.name) }}</li>
-            <button class="gererClasse"><a href="{{ path('agnez_core_classesDetail', {'id': '5A'}) }}">Voir la classe</a></button>
+        {% for classe in nomClasses %}
+        <p>{{classe}}</p>
+        <button class="gererClasse"><a href="{{ path('agnez_core_classeDetail', {'id': classe}) }}">Voir la classe</a></button>
 
         {% endfor %}
     </ul>
-
-{{ form_end(form) }}
 
 {% endblock %}

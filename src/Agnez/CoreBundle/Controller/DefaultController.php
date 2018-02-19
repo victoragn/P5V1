@@ -83,12 +83,13 @@ class DefaultController extends Controller{
         foreach($classes as $classe){
             $nomClasses[]=$classe->getName();
         }
-        var_dump($nomClasses);
-        return $this->render('@AgnezCore/Eleves/eleves.html.twig');
+        return $this->render('@AgnezCore/Eleves/eleves.html.twig', array(
+            'nomClasses' => $nomClasses,
+        ));
     }
 
     /**
-     * @Route("/classes/{id}", name="agnez_core_classesDetail")
+     * @Route("/classes/{id}", name="agnez_core_classeDetail")
      */
     public function gestionClassesDetailAction(Request $request, $id){
         $user = $this->getUser();
@@ -99,8 +100,6 @@ class DefaultController extends Controller{
             }
         }
         var_dump($classeActuelle);
-        return $this->render('@AgnezCore/Classes/ClassesDetail.html.twig', array(
-            'nomClasses' => $nomClasses,
-        ));
+        return $this->render('@AgnezCore/Classes/ClassesDetail.html.twig');
     }
 }
