@@ -34,6 +34,10 @@ class Classe
      */
     private $name;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Agnez\CoreBundle\Entity\Eleve", mappedBy="classe",cascade={"all"})
+     */
+    private $eleves;
 
     /**
      * Get id
@@ -91,5 +95,87 @@ class Classe
     public function getUser()
     {
         return $this->user;
+    }
+    /**
+     * Constructor
+     */
+    /*public function __construct()
+    {
+        $this->eleves = new \Doctrine\Common\Collections\ArrayCollection();
+    }*/
+
+    /**
+     * Add eleve
+     *
+     * @param \Agnez\CoreBundle\Entity\Eleve $eleve
+     *
+     * @return Classe
+     */
+    /*public function addEleve(\Agnez\CoreBundle\Entity\Eleve $eleve)
+    {
+        $this->eleves[] = $eleve;
+
+        return $this;
+    }*/
+
+    /**
+     * Remove eleve
+     *
+     * @param \Agnez\CoreBundle\Entity\Eleve $eleve
+     */
+    /*public function removeEleve(\Agnez\CoreBundle\Entity\Eleve $eleve)
+    {
+        $this->eleves->removeElement($eleve);
+    }*/
+
+    /**
+     * Get eleves
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    /*public function getEleves()
+    {
+        return $this->eleves;
+    }*/
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->eleves = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add elefe
+     *
+     * @param \Agnez\CoreBundle\Entity\Eleve $elefe
+     *
+     * @return Classe
+     */
+    public function addElefe(\Agnez\CoreBundle\Entity\Eleve $elefe)
+    {
+        $this->eleves[] = $elefe;
+
+        return $this;
+    }
+
+    /**
+     * Remove elefe
+     *
+     * @param \Agnez\CoreBundle\Entity\Eleve $elefe
+     */
+    public function removeElefe(\Agnez\CoreBundle\Entity\Eleve $elefe)
+    {
+        $this->eleves->removeElement($elefe);
+    }
+
+    /**
+     * Get eleves
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEleves()
+    {
+        return $this->eleves;
     }
 }

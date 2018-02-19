@@ -130,28 +130,5 @@ class Eleve
     {
         return $this->arrayPlaces;
     }
-
-    /**
-     * Set classe
-     *
-     * @param \Agnez\CoreBundle\Entity\Classe $classe
-     *
-     * @return Eleve
-     */
-    public function setClasse(\Agnez\CoreBundle\Entity\Classe $classe)
-    {
-        $this->classe = $classe;
-
-        return $this;
-    }
-
-    /**
-     * Get classe
-     *
-     * @return \Agnez\CoreBundle\Entity\Classe
-     */
-    public function getClasse()
-    {
-        return $this->classe;
-    }
 }
+

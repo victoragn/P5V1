@@ -62,7 +62,6 @@ class DefaultController extends Controller{
                     }
                 }
 
-
                 $em->persist($user);
                 $em->flush();
 
