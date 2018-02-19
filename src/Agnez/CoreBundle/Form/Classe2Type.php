@@ -6,6 +6,10 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Agnez\CoreBundle\Form\EleveType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class Classe2Type extends AbstractType
 {
@@ -14,7 +18,15 @@ class Classe2Type extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name',TextType::class);
+        $builder
+            ->add('eleves',         CollectionType::class,array(
+                'entry_type'        => EleveType::class,
+                'label'             => 'Elèves enregistrés',
+                'allow_add'         => true,
+                'allow_delete'      => true,
+                'by_reference'      => false,
+            ))
+            ->add('Envoyer',      SubmitType::class);
     }/**
      * {@inheritdoc}
      */
@@ -30,7 +42,7 @@ class Classe2Type extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'agnez_corebundle_classe';
+        return 'agnez_userbundle_classe';
     }
 
 

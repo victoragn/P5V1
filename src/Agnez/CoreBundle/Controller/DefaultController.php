@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Agnez\CoreBundle\Form\ClasseType;
+use Agnez\CoreBundle\Form\Classe2Type;
 use Agnez\CoreBundle\Form\FormulaireType;
 use Agnez\UserBundle\Form\UserType;
 use Agnez\CoreBundle\Entity\Classe;
@@ -99,7 +100,37 @@ class DefaultController extends Controller{
                 $classeActuelle=$classe;
             }
         }
-        var_dump($classeActuelle);
-        return $this->render('@AgnezCore/Classes/ClassesDetail.html.twig');
+
+        $originalEleves = new ArrayCollection();
+        foreach ($classeActuelle->getEleves() as $eleve) {
+            $originalEleves->add($eleve);
+        }
+
+        $form=$this->createForm(Classe2Type::class,$classeActuelle);
+
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+
+                foreach ($originalEleves as $eleve) {
+                    if (false === $classeActuelle->contains($eleve)) {
+                        $em->remove($eleve);
+                    }
+                }
+
+                $em->persist($classeActuelle);
+                $em->flush();
+
+                $request->getSession()->getFlashBag()->add('notice', 'Classe bien enregistrée.');
+            }
+        }
+
+        return $this->render('@AgnezCore/Classes/ClassesDetail.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
+
+
 }
