@@ -28,7 +28,7 @@ class DefaultController extends Controller{
         if (!$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirectToRoute('fos_user_security_login');
         }else{
-            $date=new \DateTime('2017-09-07 16:05:00');
+            $date=new \DateTime('2017-11-05 15:05:00');
 
             $servicedate = $this->container->get('agnez_core.servicedate');
             $numSem=$servicedate->numSem($date);
@@ -74,22 +74,33 @@ class DefaultController extends Controller{
     }
 
     /**
-     * @Route("/classes/edit", name="agnez_core_editClasses")
+     * @Route("/eleves", name="agnez_core_eleves")
      */
-    /*public function editClasseAction(Request $request){
-        $em = $this->getDoctrine()->getManager();
+    public function gestionElevesAction(){
         $user = $this->getUser();
-
-
-
-            $em->persist($user);
-            $em->flush();
-
-            // redirect back to some edit page
-            return $this->redirectToRoute('agnez_core_classes');
+        $classes=$user->getClasses();
+        $nomClasses=array();
+        foreach($classes as $classe){
+            $nomClasses[]=$classe->getName();
         }
+        var_dump($nomClasses);
+        return $this->render('@AgnezCore/Eleves/eleves.html.twig');
+    }
 
-        // render some form template
-    }*/
-
+    /**
+     * @Route("/classes/{id}", name="agnez_core_classesDetail")
+     */
+    public function gestionClassesDetailAction(Request $request, $id){
+        $user = $this->getUser();
+        $classes=$user->getClasses();
+        foreach($classes as $classe){
+            if($classe->getName()===$id){
+                $classeActuelle=$classe;
+            }
+        }
+        var_dump($classeActuelle);
+        return $this->render('@AgnezCore/Classes/ClassesDetail.html.twig', array(
+            'nomClasses' => $nomClasses,
+        ));
+    }
 }
