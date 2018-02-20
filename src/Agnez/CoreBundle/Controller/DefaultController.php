@@ -30,15 +30,15 @@ class DefaultController extends Controller{
         if (!$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirectToRoute('fos_user_security_login');
         }else{
-            $date=new \DateTime('2017-11-08 15:05:00');
+            $date=new \DateTime('2017-12-05 15:00:00');
 
             $servicedate = $this->container->get('agnez_core.servicedate');
             $numSem=$servicedate->numSem($date);
             $numHeure=$servicedate->numHeure($date);
             $test=$servicedate->getTimeByNumHeure(43);
 
-            $edtHeure= new EdtHeure();
-            $edtHeure->setDateDebut(new \DateTime('2017-11-08 15:00:00'));
+            $edtHeure= new EdtHeure($servicedate);
+            $edtHeure->setDateDebut(new \DateTime('2017-12-05 15:00:00'));
             var_dump($edtHeure);
 
 

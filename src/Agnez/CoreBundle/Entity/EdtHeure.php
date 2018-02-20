@@ -51,6 +51,12 @@ class EdtHeure
     */
     private $numSem;
 
+    private $servicedate;
+
+       public function __construct($servicedate){
+        $this->events = new ArrayCollection();
+        $this->servicedate = $servicedate;
+    }
 
     /**
      * Get id
@@ -60,10 +66,6 @@ class EdtHeure
     public function getId()
     {
         return $this->id;
-    }
-
-    public function __construct(){
-        $this->events = new ArrayCollection();
     }
 
     public function addEvent(Event $event){
@@ -78,7 +80,6 @@ class EdtHeure
         return $this->applications;
     }
 
-
     /**
      * Set dateDebut
      *
@@ -89,9 +90,10 @@ class EdtHeure
     public function setDateDebut($dateDebut)
     {
         $this->dateDebut = $dateDebut;
-        $servicedate = $this->container->get('agnez_core.servicedate');
-        $this->numSem=$servicedate->numSem($date);
-        $this->numHeure=$servicedate->numHeure($date);
+        $servicedate = $this->servicedate;
+        $this->numSem=$servicedate->numSem($dateDebut);
+        $this->numHeure=$servicedate->numHeure($dateDebut);
+        var_dump([$this->numHeure,$this->numSem]);
 
         return $this;
     }
