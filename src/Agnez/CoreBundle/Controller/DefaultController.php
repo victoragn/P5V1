@@ -56,7 +56,7 @@ class DefaultController extends Controller{
         $form->add('save', SubmitType::class);*/
 
 
-        $form=$this->createForm(FormulaireType::class , $classes);
+        $form=$this->createForm(FormulaireType::class , ['classes'=>$classes]);
         /*if ($request->isMethod('POST')) {
             $form->handleRequest($request);
 
