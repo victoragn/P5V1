@@ -8,8 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Agnez\CoreBundle\Form\ClasseType;
 use Agnez\CoreBundle\Form\Classe2Type;
-use Agnez\CoreBundle\Form\FormulaireType;
 use Agnez\UserBundle\Form\UserType;
+use Agnez\UserBundle\Form\User2Type;
 use Agnez\CoreBundle\Entity\Classe;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -29,13 +29,14 @@ class DefaultController extends Controller{
         if (!$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirectToRoute('fos_user_security_login');
         }else{
-            $date=new \DateTime('2017-11-05 15:05:00');
+            $date=new \DateTime('2017-11-08 15:05:00');
 
             $servicedate = $this->container->get('agnez_core.servicedate');
             $numSem=$servicedate->numSem($date);
             $numHeure=$servicedate->numHeure($date);
+            $test=$servicedate->getTimeByNumHeure(43);
 
-            return $this->render('@AgnezCore/Default/index.html.twig', array('numSem' => $numSem, 'numHeure' => $numHeure ));
+            return $this->render('@AgnezCore/Default/index.html.twig', array('numSem' => $numSem, 'numHeure' => $numHeure , 'test' => $test ));
         }
 
     }
@@ -129,6 +130,33 @@ class DefaultController extends Controller{
         }
 
         return $this->render('@AgnezCore/Classes/ClassesDetail.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * @Route("/edt", name="agnez_core_edt")
+     */
+    public function gestionEdtAction(Request $request){
+        $user = $this->getUser();
+        $classes=$user->getClasses();
+        $hebdoEDT=$user->getHebdoEDT();
+        $form=$this->createForm(User2Type::class,$user);
+
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+
+                $em->persist($user);
+                $em->flush();
+
+                $request->getSession()->getFlashBag()->add('notice', 'Classe bien enregistrée.');
+            }
+        }
+
+
+        return $this->render('@AgnezCore/Edt/edt.html.twig', array(
             'form' => $form->createView(),
         ));
     }

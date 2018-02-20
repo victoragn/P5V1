@@ -3,9 +3,10 @@
 {% block body %}
     <p>Numero de la semaine actuelle : {{numSem}}</p>
     <p>Heure de la semaine : {{numHeure}}</p>
+    <p>{{test|date('Y-m-d H:i:s')}}</p>
 
-
-    <button><a href="{{ path('agnez_core_classes') }}">Gerer les classes</a></button>
+    <button><a href="{{ path('agnez_core_classes') }}">Définir les classes</a></button>
     <button><a href="{{ path('agnez_core_eleves') }}">Définir les élèves</a></button>
+    <button><a href="{{ path('agnez_core_edt') }}">Définir l'emploi du temps</a></button>
 
 {% endblock %}

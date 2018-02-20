@@ -1,0 +1,11 @@
+{% extends "@AgnezCore/layout.html.twig" %}
+
+{% block body %}
+<button><a href="{{ path('agnez_core_homepage') }}">Retour à l'accueil</a></button>
+  La gestion de l'emploi du temps
+
+{{ form_start(form) }}
+{{ form_row(form) }}
+{{ form_end(form) }}
+
+{% endblock %}
