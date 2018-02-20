@@ -95,9 +95,11 @@ class DefaultController extends Controller{
     public function gestionClassesDetailAction(Request $request, $id){
         $user = $this->getUser();
         $classes=$user->getClasses();
-        foreach($classes as $classe){
-            if($classe->getName()===$id){
-                $classeActuelle=$classe;
+        $nbClasses=$classes->count();
+        for ($i=0;$i<$nbClasses;$i++){
+            if($classes[$i]->getName()===$id){
+                $nbClasseActuelle=$i;
+                $classeActuelle=$classes[$i];
             }
         }
 
@@ -110,12 +112,11 @@ class DefaultController extends Controller{
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
-
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
 
                 foreach ($originalEleves as $eleve) {
-                    if (false === $classeActuelle->contains($eleve)) {
+                    if (false === $classeActuelle->getEleves()->contains($eleve)) {
                         $em->remove($eleve);
                     }
                 }

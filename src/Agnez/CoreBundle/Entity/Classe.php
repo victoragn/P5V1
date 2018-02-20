@@ -96,47 +96,7 @@ class Classe
     {
         return $this->user;
     }
-    /**
-     * Constructor
-     */
-    /*public function __construct()
-    {
-        $this->eleves = new \Doctrine\Common\Collections\ArrayCollection();
-    }*/
 
-    /**
-     * Add eleve
-     *
-     * @param \Agnez\CoreBundle\Entity\Eleve $eleve
-     *
-     * @return Classe
-     */
-    /*public function addEleve(\Agnez\CoreBundle\Entity\Eleve $eleve)
-    {
-        $this->eleves[] = $eleve;
-
-        return $this;
-    }*/
-
-    /**
-     * Remove eleve
-     *
-     * @param \Agnez\CoreBundle\Entity\Eleve $eleve
-     */
-    /*public function removeEleve(\Agnez\CoreBundle\Entity\Eleve $eleve)
-    {
-        $this->eleves->removeElement($eleve);
-    }*/
-
-    /**
-     * Get eleves
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    /*public function getEleves()
-    {
-        return $this->eleves;
-    }*/
     /**
      * Constructor
      */
@@ -146,27 +106,28 @@ class Classe
     }
 
     /**
-     * Add elefe
+     * Add eleve
      *
-     * @param \Agnez\CoreBundle\Entity\Eleve $elefe
+     * @param \Agnez\CoreBundle\Entity\Eleve $eleve
      *
      * @return Classe
      */
-    public function addElefe(\Agnez\CoreBundle\Entity\Eleve $elefe)
+    public function addEleve(\Agnez\CoreBundle\Entity\Eleve $eleve)
     {
-        $this->eleves[] = $elefe;
+        $this->eleves[] = $eleve;
+        $eleve->setClasse($this);
 
         return $this;
     }
 
     /**
-     * Remove elefe
+     * Remove eleve
      *
-     * @param \Agnez\CoreBundle\Entity\Eleve $elefe
+     * @param \Agnez\CoreBundle\Entity\Eleve $eleve
      */
-    public function removeElefe(\Agnez\CoreBundle\Entity\Eleve $elefe)
+    public function removeEleve(\Agnez\CoreBundle\Entity\Eleve $eleve)
     {
-        $this->eleves->removeElement($elefe);
+        $this->eleves->removeElement($eleve);
     }
 
     /**

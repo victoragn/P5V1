@@ -1,7 +1,7 @@
 {% extends "@AgnezCore/layout.html.twig" %}
 
 {% block body %}
-
+<button><a href="{{ path('agnez_core_eleves') }}">Retour au choix de la classe</a></button>
 La classe en détail
 {{ form_start(form) }}
 {{ form_row(form.eleves) }}
@@ -12,7 +12,7 @@ La classe en détail
 
 <script type="text/javascript">
   $(document).ready(function() {
-    var $container = $('div#agnez_corebundle_classe_eleves');
+    var $container = $('div#agnez_userbundle_classe_eleves');
     var index = $container.find(':input').length;
     $('#add_eleve').click(function(e) {
       addEleve($container);
