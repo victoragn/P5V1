@@ -140,16 +140,20 @@ class DefaultController extends Controller{
     public function gestionEdtAction(Request $request){
         $user = $this->getUser();
         $classes=$user->getClasses();
-        $hebdoEDT=$user->getHebdoEDT();
-        $form=$this->createForm(User2Type::class,$user);
+        $hebdoEDT=array();
+        $form=$this->createFormBuilder()
+            ->add('hebdoEdt', User2Type::class,array('current_user' => $user))
+            ->getForm();
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
+                $data=$form->getData();
+                var_dump($data);
+                /*$em = $this->getDoctrine()->getManager();
 
                 $em->persist($user);
-                $em->flush();
+                $em->flush();*/
 
                 $request->getSession()->getFlashBag()->add('notice', 'Classe bien enregistrée.');
             }

@@ -5,9 +5,6 @@ namespace Agnez\UserBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Agnez\CoreBundle\Form\ClasseType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
@@ -18,33 +15,31 @@ class User2Type extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('hebdoEDT', ChoiceType::class,array(
-            'choices'  => array(
-                'Maybe' => null,
-                'Yes' => true,
-                'No' => false,
-            ),
-            // *this line is important*
-            'choices_as_values' => true,
-        ))
-            ->add('Envoyer',      SubmitType::class);
+        $user = $options['current_user'];
+
+        $classes=$user->getClasses();
+        $nomClasses= array();
+        $nomClasses['vide']=0;
+        foreach($classes as $classe){
+            $nomClasses[$classe->getName()]=$classe->getName();
+        }
+
+
+        for($j=1;$j<6;$j++){
+            for($i=1;$i<9;$i++){
+                $builder->add($j.$i, ChoiceType::class,array(
+                    'choices'  => $nomClasses,
+                    // *this line is important*
+                    'choices_as_values' => true,
+                ));
+            }
+        }
+        $builder->add('Envoyer',      SubmitType::class);
     }/**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Agnez\UserBundle\Entity\User'
-        ));
+        $resolver->setRequired('current_user');
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'agnez_userbundle_user';
-    }
-
-
 }
