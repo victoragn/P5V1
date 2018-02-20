@@ -45,6 +45,7 @@ class DefaultController extends Controller{
           ->getManager()
           ->getRepository('AgnezCoreBundle:Classe');
         $classes=$repository->findByUser( $this->getUser() );
+        var_dump($classes);
 
         /*$form = $this->createForm(FormType::class, $classes)
             ->add('classes', CollectionType::class, array(
