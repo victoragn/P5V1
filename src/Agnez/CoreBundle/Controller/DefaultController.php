@@ -11,6 +11,7 @@ use Agnez\CoreBundle\Form\Classe2Type;
 use Agnez\UserBundle\Form\UserType;
 use Agnez\UserBundle\Form\User2Type;
 use Agnez\CoreBundle\Entity\Classe;
+use Agnez\CoreBundle\Entity\EdtHeure;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -35,6 +36,11 @@ class DefaultController extends Controller{
             $numSem=$servicedate->numSem($date);
             $numHeure=$servicedate->numHeure($date);
             $test=$servicedate->getTimeByNumHeure(43);
+
+            $edtHeure= new EdtHeure();
+            $edtHeure->setDateDebut(new \DateTime('2017-11-08 15:00:00'));
+            var_dump($edtHeure);
+
 
             return $this->render('@AgnezCore/Default/index.html.twig', array('numSem' => $numSem, 'numHeure' => $numHeure , 'test' => $test ));
         }

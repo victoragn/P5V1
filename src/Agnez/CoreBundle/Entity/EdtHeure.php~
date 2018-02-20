@@ -23,7 +23,7 @@ class EdtHeure
      * @ORM\JoinColumn(nullable=false)
      */
     private $classe;
-
+    
     /**
      * @var int
      *
@@ -38,13 +38,13 @@ class EdtHeure
     *@ORM\Column(type="datetime", name="dateDebut")
     */
     private $dateDebut;
-
+    
     /**
     *@var int
     *@ORM\Column(type="int", name="numHeure")
     */
     private $numHeure;
-
+    
     /**
     *@var int
     *@ORM\Column(type="int", name="numSem")
@@ -89,9 +89,6 @@ class EdtHeure
     public function setDateDebut($dateDebut)
     {
         $this->dateDebut = $dateDebut;
-        $servicedate = $this->container->get('agnez_core.servicedate');
-        $this->numSem=$servicedate->numSem($date);
-        $this->numHeure=$servicedate->numHeure($date);
 
         return $this;
     }
@@ -138,53 +135,5 @@ class EdtHeure
     public function getClasse()
     {
         return $this->classe;
-    }
-
-    /**
-     * Set numHeure
-     *
-     * @param \int $numHeure
-     *
-     * @return EdtHeure
-     */
-    public function setNumHeure(int $numHeure)
-    {
-        $this->numHeure = $numHeure;
-
-        return $this;
-    }
-
-    /**
-     * Get numHeure
-     *
-     * @return \int
-     */
-    public function getNumHeure()
-    {
-        return $this->numHeure;
-    }
-
-    /**
-     * Set numSem
-     *
-     * @param \int $numSem
-     *
-     * @return EdtHeure
-     */
-    public function setNumSem(int $numSem)
-    {
-        $this->numSem = $numSem;
-
-        return $this;
-    }
-
-    /**
-     * Get numSem
-     *
-     * @return \int
-     */
-    public function getNumSem()
-    {
-        return $this->numSem;
     }
 }

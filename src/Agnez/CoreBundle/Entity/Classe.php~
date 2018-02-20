@@ -19,6 +19,11 @@ class Classe
     private $user;
 
     /**
+     * @ORM\OneToMany(targetEntity="Agnez\CoreBundle\Entity\EdtHeure", mappedBy="classe")
+     */
+    private $edtHeures;
+    
+    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -38,7 +43,7 @@ class Classe
      * @ORM\OneToMany(targetEntity="Agnez\CoreBundle\Entity\Eleve", mappedBy="classe",cascade={"all"})
      */
     private $eleves;
-    
+
     /**
      * Get id
      *
@@ -96,13 +101,14 @@ class Classe
     {
         return $this->user;
     }
+
     /**
      * Constructor
      */
-    /*public function __construct()
+    public function __construct()
     {
         $this->eleves = new \Doctrine\Common\Collections\ArrayCollection();
-    }*/
+    }
 
     /**
      * Add eleve
@@ -111,30 +117,31 @@ class Classe
      *
      * @return Classe
      */
-    /*public function addEleve(\Agnez\CoreBundle\Entity\Eleve $eleve)
+    public function addEleve(\Agnez\CoreBundle\Entity\Eleve $eleve)
     {
         $this->eleves[] = $eleve;
+        $eleve->setClasse($this);
 
         return $this;
-    }*/
+    }
 
     /**
      * Remove eleve
      *
      * @param \Agnez\CoreBundle\Entity\Eleve $eleve
      */
-    /*public function removeEleve(\Agnez\CoreBundle\Entity\Eleve $eleve)
+    public function removeEleve(\Agnez\CoreBundle\Entity\Eleve $eleve)
     {
         $this->eleves->removeElement($eleve);
-    }*/
+    }
 
     /**
      * Get eleves
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    /*public function getEleves()
+    public function getEleves()
     {
         return $this->eleves;
-    }*/
+    }
 }

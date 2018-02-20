@@ -21,8 +21,8 @@ class Classe
     /**
      * @ORM\OneToMany(targetEntity="Agnez\CoreBundle\Entity\EdtHeure", mappedBy="classe")
      */
-    private $edtHeures;
-
+    private $edt;
+    
     /**
      * @var int
      *
@@ -143,39 +143,5 @@ class Classe
     public function getEleves()
     {
         return $this->eleves;
-    }
-
-    /**
-     * Add edtHeure
-     *
-     * @param \Agnez\CoreBundle\Entity\EdtHeure $edtHeure
-     *
-     * @return Classe
-     */
-    public function addEdtHeure(\Agnez\CoreBundle\Entity\EdtHeure $edtHeure)
-    {
-        $this->edtHeures[] = $edtHeure;
-
-        return $this;
-    }
-
-    /**
-     * Remove edtHeure
-     *
-     * @param \Agnez\CoreBundle\Entity\EdtHeure $edtHeure
-     */
-    public function removeEdtHeure(\Agnez\CoreBundle\Entity\EdtHeure $edtHeure)
-    {
-        $this->edtHeures->removeElement($edtHeure);
-    }
-
-    /**
-     * Get edtHeures
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getEdtHeures()
-    {
-        return $this->edtHeures;
     }
 }
