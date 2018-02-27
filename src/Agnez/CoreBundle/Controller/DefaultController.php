@@ -146,6 +146,9 @@ class DefaultController extends Controller{
         $user = $this->getUser();
         $classes=$user->getClasses();
         $hebdoEDT=array();
+        if( !empty($user->getHebdoEDT()) ){
+            $hebdoEDT=$user->getHebdoEDT();
+        }
         $form=$this->createFormBuilder()
             ->add('hebdoEdt', User2Type::class,array('current_user' => $user))
             ->getForm();
@@ -154,13 +157,13 @@ class DefaultController extends Controller{
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $data=$form->getData();
-                var_dump($data);
-                /*$em = $this->getDoctrine()->getManager();
+                $user->setHebdoEDT($data);
+                $em = $this->getDoctrine()->getManager();
 
                 $em->persist($user);
-                $em->flush();*/
+                $em->flush();
 
-                $request->getSession()->getFlashBag()->add('notice', 'Classe bien enregistrée.');
+                $request->getSession()->getFlashBag()->add('notice', 'EDT bien enregistré.');
             }
         }
 
@@ -169,6 +172,16 @@ class DefaultController extends Controller{
             'form' => $form->createView(),
         ));
     }
+
+    /**
+     * @Route("/edt/init", name="agnez_core_edt_init")
+     */
+    public function initEdtAction(Request $request){
+        $user = $this->getUser();
+        $classes=$user->getClasses();
+        $hebdoEDT=$user->getHebdoEDT();
+    }
+
 
 
 }

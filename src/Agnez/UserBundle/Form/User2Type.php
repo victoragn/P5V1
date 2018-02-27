@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class User2Type extends AbstractType
 {
@@ -16,6 +17,7 @@ class User2Type extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $user = $options['current_user'];
+        $edt=$user->getHebdoEDT()['hebdoEdt'];
 
         $classes=$user->getClasses();
         $nomClasses= array();
@@ -27,11 +29,14 @@ class User2Type extends AbstractType
 
         for($j=1;$j<6;$j++){
             for($i=1;$i<9;$i++){
-                $builder->add($j.$i, ChoiceType::class,array(
-                    'choices'  => $nomClasses,
-                    // *this line is important*
-                    'choices_as_values' => true,
-                ));
+                $valClasse=$edt[$j*10+$i];
+                $builder
+                    ->add($j.$i, ChoiceType::class,array(
+                        'choices'  => $nomClasses,
+                        // *this line is important*
+                        'choices_as_values' => true,
+                        'data' => $valClasse,
+                    ));
             }
         }
         $builder->add('Envoyer',      SubmitType::class);
