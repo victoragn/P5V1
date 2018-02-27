@@ -48,6 +48,14 @@ class Eleve
      */
     private $arrayPlaces;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="place", type="integer")
+     */
+    private $place;
+
+
 
     /**
      * Get id
@@ -153,5 +161,29 @@ class Eleve
     public function getClasse()
     {
         return $this->classe;
+    }
+
+    /**
+     * Set place
+     *
+     * @param integer $place
+     *
+     * @return Eleve
+     */
+    public function setPlace($place)
+    {
+        $this->place = $place;
+
+        return $this;
+    }
+
+    /**
+     * Get place
+     *
+     * @return integer
+     */
+    public function getPlace()
+    {
+        return $this->place;
     }
 }

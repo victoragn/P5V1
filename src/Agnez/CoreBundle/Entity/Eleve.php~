@@ -47,6 +47,14 @@ class Eleve
      * @ORM\Column(name="arrayPlaces", type="array", nullable=true)
      */
     private $arrayPlaces;
+    
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="place", type="integer")
+     */
+    private $place;
+
 
 
     /**
@@ -130,5 +138,28 @@ class Eleve
     {
         return $this->arrayPlaces;
     }
-}
 
+    /**
+     * Set classe
+     *
+     * @param \Agnez\CoreBundle\Entity\Classe $classe
+     *
+     * @return Eleve
+     */
+    public function setClasse(\Agnez\CoreBundle\Entity\Classe $classe)
+    {
+        $this->classe = $classe;
+
+        return $this;
+    }
+
+    /**
+     * Get classe
+     *
+     * @return \Agnez\CoreBundle\Entity\Classe
+     */
+    public function getClasse()
+    {
+        return $this->classe;
+    }
+}

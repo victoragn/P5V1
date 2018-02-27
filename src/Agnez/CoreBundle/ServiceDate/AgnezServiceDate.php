@@ -42,7 +42,6 @@ class AgnezServiceDate{
 
         for($j=2;$j<6;$j++){
             for($i=1;$i<9;$i++){
-                $temp='h'.$j.$i;
                 if ($numSec >= $this->{'h'.$j.$i}  &&  $numSec < $this->{'h'.$j.$i} + 3600){$result= $j.$i;}
             }
         }
@@ -50,10 +49,12 @@ class AgnezServiceDate{
     }
 
     public function getTimeByNumHeure($numHeure){
-        $date=$this->dateDepart;
+        $date= new \DateTime($this->dateDepart->format('Y-m-d'));
         for($j=1;$j<6;$j++){
             for($i=1;$i<9;$i++){
-                if ($numHeure===$j*10+$i){$date->add(new DateInterval('PT'.$this->{'h'.$j.$i}.'S'));}
+                if ($numHeure===$j*10+$i){
+                    $date->add(new DateInterval('PT'.$this->{'h'.$j.$i}.'S'));
+                }
             }
         }
         return $date;
