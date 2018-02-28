@@ -49,10 +49,9 @@ class Eleve
     private $arrayPlaces;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="place", type="integer")
-     */
+    *@var int
+    *@ORM\Column(type="integer", name="place",nullable=true)
+    */
     private $place;
 
 

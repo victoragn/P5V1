@@ -41,13 +41,13 @@ class EdtHeure
 
     /**
     *@var int
-    *@ORM\Column(type="int", name="numHeure")
+    *@ORM\Column(type="integer", name="numHeure")
     */
     private $numHeure;
 
     /**
     *@var int
-    *@ORM\Column(type="int", name="numSem")
+    *@ORM\Column(type="integer", name="numSem")
     */
     private $numSem;
 

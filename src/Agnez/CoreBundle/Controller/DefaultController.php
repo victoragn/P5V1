@@ -180,6 +180,25 @@ class DefaultController extends Controller{
         $user = $this->getUser();
         $classes=$user->getClasses();
         $hebdoEDT=$user->getHebdoEDT();
+
+        /*Supprime les anciennes heures*/
+        $em = $this->getDoctrine()->getManager();
+        $repository = $this
+          ->getDoctrine()
+          ->getManager()
+          ->getRepository('AgnezCoreBundle:EdtHeure')
+        ;
+
+        foreach ($classes as $classe){
+            $id=$classe->getId();
+            $listHeures = $repository->findBy( array('classe' => $id) );
+            foreach($listHeures as $heure){
+                $em->remove($heure);
+                $em->flush();
+            }
+        }
+
+
     }
 
 
