@@ -3,5 +3,6 @@ services:
         class : Agnez\CoreBundle\ServiceDate\AgnezServiceDate
         arguments :  ['2017-09-04']
 
-    agnez_core.initEdt:
-        class : Agnez\CoreBundle\ServiceDate\AgnezInitEdt
+    agnez_core.serviceinitEdt:
+        class : Agnez\CoreBundle\ServiceInitEdt\AgnezServiceInitEdt
+        arguments :  ['@agnez_core.servicedate',3]

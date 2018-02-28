@@ -6,7 +6,7 @@ use DatePeriod;
 use DateInterval;
 
 class AgnezServiceDate{
-    private $dateDepart;
+    private $dateRentree;
     private $h11=28800;//8h
     private $h12=32400;//9h
     private $h13=36000;//10h
@@ -18,8 +18,8 @@ class AgnezServiceDate{
     private $h21,$h22,$h23,$h24,$h25,$h26,$h27,$h28,$h31,$h32,$h33,$h34,$h35,$h36,$h37,$h38,$h41,$h42,$h43,$h44,$h45,$h46,$h47,$h48,$h51,$h52,$h53,$h54,$h55,$h56,$h57,$h58;
 
 
-    public function __construct($dateDepart){
-        $this->dateDepart = new \DateTime($dateDepart);
+    public function __construct($dateRentree){
+        $this->dateRentree = new \DateTime($dateRentree);
         for($j=2;$j<6;$j++){
             for($i=1;$i<9;$i++){
                 $this->{'h'.$j.$i} = $this->{'h1'.$i} + ($j-1)*86400 ;
@@ -28,28 +28,30 @@ class AgnezServiceDate{
     }
 
     public function numSem($date){
-        $interval= $date->diff($this->dateDepart);
+        $interval= $date->diff($this->dateRentree);
         $numSem=floor($interval->days /7) + 1;
         return  $numSem;
     }
 
     public function numHeure($date){
-        $date1= $this->dateDepart->format('U');
+        $date1= $this->dateRentree->format('U');
         $date2= $date->format('U');
         $interval= $date2 - $date1;
         $numSec= $interval % 604800;
         $result =0;
 
-        for($j=2;$j<6;$j++){
+        for($j=1;$j<6;$j++){
             for($i=1;$i<9;$i++){
-                if ($numSec >= $this->{'h'.$j.$i}  &&  $numSec < $this->{'h'.$j.$i} + 3600){$result= $j.$i;}
+                if ($numSec >= $this->{'h'.$j.$i}  &&  $numSec < $this->{'h'.$j.$i} + 3600){
+                    $result= $j.$i;
+                }
             }
         }
         return $result;
     }
 
     public function getTimeByNumHeure($numHeure){
-        $date= new \DateTime($this->dateDepart->format('Y-m-d'));
+        $date= new \DateTime($this->dateRentree->format('Y-m-d'));
         for($j=1;$j<6;$j++){
             for($i=1;$i<9;$i++){
                 if ($numHeure===$j*10+$i){

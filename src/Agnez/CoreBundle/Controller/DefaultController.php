@@ -35,7 +35,7 @@ class DefaultController extends Controller{
             $date=new \DateTime('2017-12-05 15:00:00');//différents tests
             $numSem=$servicedate->numSem($date);
             $numHeure=$servicedate->numHeure($date);
-            $test=$servicedate->getTimeByNumHeure(43);
+            $test=$servicedate->getTimeByNumHeure(38);
 
             /*$edtHeure= new EdtHeure($servicedate);
             $edtHeure->setDateDebut(new \DateTime('2017-12-05 15:00:00'));*/
@@ -188,7 +188,6 @@ class DefaultController extends Controller{
           ->getManager()
           ->getRepository('AgnezCoreBundle:EdtHeure')
         ;
-
         foreach ($classes as $classe){
             $id=$classe->getId();
             $listHeures = $repository->findBy( array('classe' => $id) );
@@ -198,7 +197,15 @@ class DefaultController extends Controller{
             }
         }
 
+        /*Ajout des nouvelles heures*/
+        $serviceinit = $this->container->get('agnez_core.serviceinitEdt');
+        $listeHeures=$serviceinit->setNewHeures( $this->getUser() );
+        foreach($listeHeures as $heure){
+            $em->persist($heure);
+        }
+        $em->flush();
 
+        return $this->redirectToRoute('agnez_core_edt');
     }
 
 

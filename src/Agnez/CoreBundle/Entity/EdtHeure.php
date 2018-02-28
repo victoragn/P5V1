@@ -93,7 +93,6 @@ class EdtHeure
         $servicedate = $this->servicedate;
         $this->numSem=$servicedate->numSem($dateDebut);
         $this->numHeure=$servicedate->numHeure($dateDebut);
-        var_dump([$this->numHeure,$this->numSem]);
 
         return $this;
     }
