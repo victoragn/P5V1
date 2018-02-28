@@ -23,27 +23,39 @@ use DateInterval;
 
 class DefaultController extends Controller{
      /**
-     * @Route("/", name="agnez_core_homepage")
+     * @Route("/{sem}", name="agnez_core_homepage", requirements={"sem"="\d+"})
      */
-    public function indexAction(){
-        $securityContext = $this->container->get('security.authorization_checker');
-        if (!$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            return $this->redirectToRoute('fos_user_security_login');
-        }else{
-            $servicedate = $this->container->get('agnez_core.servicedate');
+    public function indexAction($sem=0){
+        $servicedate = $this->container->get('agnez_core.servicedate');
+        if ($sem==0){//si la semaine n'est pas définie, envoie sur la semaine actuelle
+            $sem=$servicedate->numSem(new DateTime());
+            return $this->redirectToRoute('agnez_core_homepage',array('sem'=>$sem));
+        }else{//sinon verifie l'authentification
+            $securityContext = $this->container->get('security.authorization_checker');
+            if (!$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+                return $this->redirectToRoute('fos_user_security_login');
+            }else{
+                $servicegetSem = $this->container->get('agnez_core.servicegetSem');
+                $repository = $this
+                    ->getDoctrine()
+                    ->getManager()
+                    ->getRepository('AgnezCoreBundle:EdtHeure');
 
-            $date=new \DateTime('2017-12-05 15:00:00');//différents tests
-            $numSem=$servicedate->numSem($date);
-            $numHeure=$servicedate->numHeure($date);
-            $test=$servicedate->getTimeByNumHeure(38);
+                $date=new \DateTime('2017-12-05 15:00:00');//différents tests
+                $numSem=$servicedate->numSem($date);
+                $numHeure=$servicedate->numHeure($date);
+                $test=$servicedate->getTimeByNumHeure(38);
 
-            /*$edtHeure= new EdtHeure($servicedate);
-            $edtHeure->setDateDebut(new \DateTime('2017-12-05 15:00:00'));*/
+                $listeHeuresSem=$servicegetSem->getSem($this->getUser(),$sem,$repository);
+                var_dump($listeHeuresSem);
+
+                /*$edtHeure= new EdtHeure($servicedate);
+                $edtHeure->setDateDebut(new \DateTime('2017-12-05 15:00:00'));*/
 
 
-            return $this->render('@AgnezCore/Default/index.html.twig', array('numSem' => $numSem, 'numHeure' => $numHeure , 'test' => $test ));
+                return $this->render('@AgnezCore/Default/index.html.twig', array('numSem' => $numSem, 'numHeure' => $numHeure , 'test' => $test ));
+            }
         }
-
     }
 
      /**
@@ -205,7 +217,7 @@ class DefaultController extends Controller{
         }
         $em->flush();
 
-        return $this->redirectToRoute('agnez_core_edt');
+        return $this->redirectToRoute('agnez_core_homepage');
     }
 
 

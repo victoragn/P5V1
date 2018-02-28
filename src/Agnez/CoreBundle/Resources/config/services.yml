@@ -5,4 +5,7 @@ services:
 
     agnez_core.serviceinitEdt:
         class : Agnez\CoreBundle\ServiceInitEdt\AgnezServiceInitEdt
-        arguments :  ['@agnez_core.servicedate',3]
+        arguments :  ['@agnez_core.servicedate',40]
+
+    agnez_core.servicegetSem:
+        class : Agnez\CoreBundle\ServiceGetSem\AgnezServiceGetSem
