@@ -12,23 +12,52 @@
             <th>Jeudi</th>
             <th>Vendredi</th>
         </tr>
+        {% set colonne1 = ['8h-9h','9h-10h','10h-11h','11h-12h','14h-15h','15h-16h','16h-17h','17h-18h'] %}
         {% for i in  1..8 %}
         <tr>
-            <td>{{i}}</td>
+            <td>{{colonne1[i-1]}}</td>
             {% for j in  1..5 %}
-                <td>
-                    {% set case = '' %}
+
+                    {% set hTrouvee = '' %}
                     {% for heure in listeHeures%}
                         {% if heure.numHeure==j*10+i %}
-                            {% set case = heure.classe.name %}
+                            {% set hTrouvee = heure %}
                         {% endif %}
                     {% endfor %}
-                    {{case}}
-                </td>
+                    {% if hTrouvee !='' %}
+                        <td><a href="{{ path('agnez_core_homepage',{'sem' : numSem, 'numHeure' : hTrouvee.id}) }}">{{hTrouvee.classe.name}}</a></td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+
             {% endfor %}
         </tr>
         {% endfor %}
     </table>
+
+    {% if form is defined %}
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+        <table>
+            <tr>
+            {%for k in 1..heureSelec.classe.eleves|length %}
+
+                <td>{{ form_row(attribute(form.tabOubliClasse, 'oubli' ~ k ) ) }}</td>
+
+                {% if k is divisibleby(2)%}
+                    {% if k is divisibleby(6 )%}
+                        </tr><tr>
+                    {% else %}
+                        <td class='couloirClasse'></td>
+                    {% endif %}
+                {% endif %}
+
+            {% endfor %}
+            </tr>
+        </table>
+        {{ form_widget(form.tabOubliClasse.save, { 'label': 'Enregistrer les oublis' }) }}
+        {{ form_end(form) }}
+    {% endif %}
 
 
     <button><a href="{{ path('agnez_core_classes') }}">Définir les classes</a></button>

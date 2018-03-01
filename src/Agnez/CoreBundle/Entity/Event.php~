@@ -36,7 +36,7 @@ class Event
     /**
      * @var int
      *
-     * @ORM\Column(name="type", type="integer", nullable=true)
+     * @ORM\Column(name="type", type="integer")
      */
     private $type;
 
@@ -74,52 +74,5 @@ class Event
     {
         return $this->type;
     }
-
-    /**
-     * Set eleve
-     *
-     * @param \Agnez\CoreBundle\Entity\Eleve $eleve
-     *
-     * @return Event
-     */
-    public function setEleve(\Agnez\CoreBundle\Entity\Eleve $eleve)
-    {
-        $this->eleve = $eleve;
-
-        return $this;
-    }
-
-    /**
-     * Get eleve
-     *
-     * @return \Agnez\CoreBundle\Entity\Eleve
-     */
-    public function getEleve()
-    {
-        return $this->eleve;
-    }
-
-    /**
-     * Set edtHeure
-     *
-     * @param \Agnez\CoreBundle\Entity\EdtHeure $edtHeure
-     *
-     * @return Event
-     */
-    public function setEdtHeure(\Agnez\CoreBundle\Entity\EdtHeure $edtHeure)
-    {
-        $this->edtHeure = $edtHeure;
-
-        return $this;
-    }
-
-    /**
-     * Get edtHeure
-     *
-     * @return \Agnez\CoreBundle\Entity\EdtHeure
-     */
-    public function getEdtHeure()
-    {
-        return $this->edtHeure;
-    }
 }
+
