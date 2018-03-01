@@ -35,6 +35,10 @@
         {% endfor %}
     </table>
 
+    {% if message is defined %}
+    <p class="messageInfo">{{message}}</p>
+    {% endif %}
+
     {% if form is defined %}
         {{ form_start(form) }}
         {{ form_errors(form) }}

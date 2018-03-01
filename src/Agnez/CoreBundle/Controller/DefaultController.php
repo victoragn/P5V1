@@ -52,60 +52,71 @@ class DefaultController extends Controller{
                             $heureSelec=$heure;
                         }
                     }
+                    $events=$heureSelec->getEvents();
+                    $eleves=$heureSelec->getClasse()->getEleves();
 
-                    $form=$this->createFormBuilder()
-                        ->add('tabOubliClasse', OubliClasseType::class,array('heure' =>$heureSelec))
-                        ->getForm();
+                    if(count($eleves)==0){
+                        return $this->render('@AgnezCore/Default/index.html.twig', array(
+                            'listeHeures' => $listeHeuresSem,
+                            'numSem' => $sem,
+                            'message' => 'Veuillez remplir des élèves pour cette classe !'
+                        ));
+                    }else{
+                        $form=$this->createFormBuilder()
+                            ->add('tabOubliClasse', OubliClasseType::class,array('heure' =>$heureSelec))
+                            ->getForm();
 
-                    if ($request->isMethod('POST')) {
-                        $form->handleRequest($request);
-                        if ($form->isValid()) {
-                            $data=$form->getData()['tabOubliClasse'];
-                            $events=$heureSelec->getEvents();
-                            $eleves=$heureSelec->getClasse()->getEleves();
+                        if ($request->isMethod('POST')) {
+                            $form->handleRequest($request);
+                            if ($form->isValid()) {
+                                $data=$form->getData()['tabOubliClasse'];
 
-                            for ($i=1;$i<=count($data);$i++){
-                                foreach($eleves as $eleve){
-                                    if($eleve->getPlace()==$i){
-                                        $eleveTemp=$eleve;//Trouve l'eleve i et l'enregistre dans eleveTemp
+                                for ($i=1;$i<=count($data);$i++){
+                                    foreach($eleves as $eleve){
+                                        if($eleve->getPlace()==$i){
+                                            $eleveTemp=$eleve;//Trouve l'eleve i et l'enregistre dans eleveTemp
+                                        }
+                                        $em = $this->getDoctrine()->getManager();
                                     }
-                                    $em = $this->getDoctrine()->getManager();
-                                }
-                                if($data['oubli'.$i]==false){
-                                    foreach($events as $event){
-                                        if($event->getEdtHeure()==$heureSelec && $event->getEleve()==$eleveTemp){
-                                            $em->remove($event);
+                                    if($data['oubli'.$i]==false){
+                                        foreach($events as $event){
+                                            if($event->getEdtHeure()==$heureSelec && $event->getEleve()==$eleveTemp){
+                                                $em->remove($event);
+                                            }
                                         }
                                     }
-                                }
-                                if($data['oubli'.$i]==true){
-                                    $eventPresent=0;
-                                    foreach($events as $event){
-                                        if($event->getEdtHeure()==$heureSelec && $event->getEleve()==$eleveTemp){
-                                            $eventPresent++;
+                                    if($data['oubli'.$i]==true){
+                                        $eventPresent=0;
+                                        foreach($events as $event){
+                                            if($event->getEdtHeure()==$heureSelec && $event->getEleve()==$eleveTemp){
+                                                $eventPresent++;
+                                            }
+                                        }
+                                        if($eventPresent==0){
+                                            $nouvEvent=new Event();
+                                            $nouvEvent->setEdtHeure($heureSelec);
+                                            $nouvEvent->setEleve($eleveTemp);
+                                            $em->persist($nouvEvent);
+
                                         }
                                     }
-                                    if($eventPresent==0){
-                                        $nouvEvent=new Event();
-                                        $nouvEvent->setEdtHeure($heureSelec);
-                                        $nouvEvent->setEleve($eleveTemp);
-                                        $em->persist($nouvEvent);
-
-                                    }
+                                    $em->flush();
                                 }
-                                $em->flush();
                             }
                         }
+                        return $this->render('@AgnezCore/Default/index.html.twig', array(
+                            'listeHeures' => $listeHeuresSem,
+                            'numSem' => $sem,
+                            'form' => $form->createView(),
+                            'heureSelec' => $heureSelec
+                        ));
                     }
-
+                }else{
                     return $this->render('@AgnezCore/Default/index.html.twig', array(
                         'listeHeures' => $listeHeuresSem,
-                        'numSem'=>$sem,
-                        'form' => $form->createView(),
-                        'heureSelec' => $heureSelec
+                        'numSem' => $sem,
+                        'message' => 'Sélectionnez une heure de la semaine'
                     ));
-                }else{
-                    return $this->render('@AgnezCore/Default/index.html.twig', array('listeHeures' => $listeHeuresSem, 'numSem'=>$sem));
                 }
             }
         }
