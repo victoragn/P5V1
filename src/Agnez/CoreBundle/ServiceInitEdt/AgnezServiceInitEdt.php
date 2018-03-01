@@ -44,5 +44,18 @@ class AgnezServiceInitEdt{
         return $listeHeures;
     }
 
+    public function setPlaces($user){
+        $classes=$user->getClasses();
+        foreach ($classes as $classe){
+            $eleves=$classe->getEleves();
+            $i=1;
+            foreach ($eleves as $eleve){
+                $eleve->setPlace($i);
+                $i++;
+            }
+
+        }
+    }
+
 
 }
