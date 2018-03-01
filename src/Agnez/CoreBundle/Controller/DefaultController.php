@@ -41,19 +41,9 @@ class DefaultController extends Controller{
                     ->getManager()
                     ->getRepository('AgnezCoreBundle:EdtHeure');
 
-                $date=new \DateTime('2017-12-05 15:00:00');//différents tests
-                $numSem=$servicedate->numSem($date);
-                $numHeure=$servicedate->numHeure($date);
-                $test=$servicedate->getTimeByNumHeure(38);
-
                 $listeHeuresSem=$servicegetSem->getSem($this->getUser(),$sem,$repository);
-                var_dump($listeHeuresSem);
 
-                /*$edtHeure= new EdtHeure($servicedate);
-                $edtHeure->setDateDebut(new \DateTime('2017-12-05 15:00:00'));*/
-
-
-                return $this->render('@AgnezCore/Default/index.html.twig', array('numSem' => $numSem, 'numHeure' => $numHeure , 'test' => $test ));
+                return $this->render('@AgnezCore/Default/index.html.twig', array('listeHeures' => $listeHeuresSem, 'numSem'=>$sem));
             }
         }
     }

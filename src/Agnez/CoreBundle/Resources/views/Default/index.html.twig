@@ -1,9 +1,35 @@
 {% extends "@AgnezCore/layout.html.twig" %}
 
 {% block body %}
-    <p>Numero de la semaine actuelle : {{numSem}}</p>
-    <p>Heure de la semaine : {{numHeure}}</p>
-    <p>{{test|date('Y-m-d H:i:s')}}</p>
+    <button><a href="{{ path('agnez_core_homepage',{'sem' : numSem - 1}) }}">Semaine précedente</a></button>
+    <button><a href="{{ path('agnez_core_homepage',{'sem' : numSem + 1}) }}">Semaine suivante</a></button>
+    <table>
+        <tr>
+            <th></th>
+            <th>Lundi</th>
+            <th>Mardi</th>
+            <th>Mercredi</th>
+            <th>Jeudi</th>
+            <th>Vendredi</th>
+        </tr>
+        {% for i in  1..8 %}
+        <tr>
+            <td>{{i}}</td>
+            {% for j in  1..5 %}
+                <td>
+                    {% set case = '' %}
+                    {% for heure in listeHeures%}
+                        {% if heure.numHeure==j*10+i %}
+                            {% set case = heure.classe.name %}
+                        {% endif %}
+                    {% endfor %}
+                    {{case}}
+                </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+
 
     <button><a href="{{ path('agnez_core_classes') }}">Définir les classes</a></button>
     <button><a href="{{ path('agnez_core_eleves') }}">Définir les élèves</a></button>
