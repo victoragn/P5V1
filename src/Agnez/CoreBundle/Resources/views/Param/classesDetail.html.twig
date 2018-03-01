@@ -1,7 +1,7 @@
 {% extends "@AgnezCore/layout.html.twig" %}
 
 {% block body %}
-<button><a href="{{ path('agnez_core_eleves') }}">Retour au choix de la classe</a></button>
+<button><a href="{{ path('agnez_core_choixClasse') }}">Retour au choix de la classe</a></button>
 La classe en détail
 {{ form_start(form) }}
 {{ form_row(form.eleves) }}

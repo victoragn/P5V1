@@ -1,0 +1,7 @@
+{% extends "@AgnezCore/layout.html.twig" %}
+
+{% block body %}
+    Etes-vous sur de vouloir lancer l'initialisation ? Toutes les anciennes heures de cours seront supprimées.
+    <button><a href="{{ path('agnez_core_edt_init') }}">Lancer l'initialisation</a></button>
+
+{% endblock %}

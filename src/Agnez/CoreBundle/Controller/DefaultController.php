@@ -28,15 +28,22 @@ class DefaultController extends Controller{
      * @Route("/{sem}/{numHeure}", name="agnez_core_homepage", requirements={"sem"="\d+","numHeure"="\d+"})
      */
     public function indexAction(Request $request, $sem=0, $numHeure=0){
-        $servicedate = $this->container->get('agnez_core.servicedate');
-        if ($sem==0){//si la semaine n'est pas définie, envoie sur la semaine actuelle
-            $sem=$servicedate->numSem(new DateTime());
-            return $this->redirectToRoute('agnez_core_homepage',array('sem'=>$sem));
-        }else{//sinon verifie l'authentification
-            $securityContext = $this->container->get('security.authorization_checker');
-            if (!$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-                return $this->redirectToRoute('fos_user_security_login');
-            }else{
+
+
+        $securityContext = $this->container->get('security.authorization_checker');
+        if (!$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirectToRoute('fos_user_security_login');
+        }else{
+
+            if($this->getUser()->getInitialized()==0){// si le user n'a pas initialisé une premiere fois va vers la page des parametres
+                return $this->redirectToRoute('agnez_core_param');
+            }
+
+            $servicedate = $this->container->get('agnez_core.servicedate');
+            if ($sem==0){//si la semaine n'est pas définie, envoie sur la semaine actuelle
+                $sem=$servicedate->numSem(new DateTime());
+                return $this->redirectToRoute('agnez_core_homepage',array('sem'=>$sem));
+            }else{//sinon verifie l'authentification
                 $servicegetSem = $this->container->get('agnez_core.servicegetSem');
                 $repository = $this
                     ->getDoctrine()
@@ -122,10 +129,18 @@ class DefaultController extends Controller{
         }
     }
 
-     /**
-     * @Route("/classes", name="agnez_core_classes")
+    /**
+     * @Route("/param", name="agnez_core_param")
      */
-    public function gestionClassesAction(Request $request){
+    public function paramAction(){
+        return $this->render('@AgnezCore/Param/param.html.twig');
+    }
+
+
+     /**
+     * @Route("/initClasses", name="agnez_core_initClasses")
+     */
+    public function initClassesAction(Request $request){
         $user = $this->getUser();
         $originalClasses = new ArrayCollection();
         foreach ($user->getClasses() as $classe) {
@@ -147,26 +162,26 @@ class DefaultController extends Controller{
 
                 $em->persist($user);
                 $em->flush();
+                return $this->redirectToRoute('agnez_core_choixClasse');
 
-                $request->getSession()->getFlashBag()->add('notice', 'User bien enregistré.');
             }
         }
-        return $this->render('@AgnezCore/Classes/classes.html.twig', array(
+        return $this->render('@AgnezCore/Param/classes.html.twig', array(
             'form' => $form->createView(),
         ));
     }
 
     /**
-     * @Route("/eleves", name="agnez_core_eleves")
+     * @Route("/classes", name="agnez_core_choixClasse")
      */
-    public function gestionElevesAction(){
+    public function choixClasseAction(){
         $user = $this->getUser();
         $classes=$user->getClasses();
         $nomClasses=array();
         foreach($classes as $classe){
             $nomClasses[]=$classe->getName();
         }
-        return $this->render('@AgnezCore/Eleves/eleves.html.twig', array(
+        return $this->render('@AgnezCore/Param/choixClasse.html.twig', array(
             'nomClasses' => $nomClasses,
         ));
     }
@@ -206,11 +221,11 @@ class DefaultController extends Controller{
                 $em->persist($classeActuelle);
                 $em->flush();
 
-                $request->getSession()->getFlashBag()->add('notice', 'Classe bien enregistrée.');
+                return $this->redirectToRoute('agnez_core_choixClasse');
             }
         }
 
-        return $this->render('@AgnezCore/Classes/ClassesDetail.html.twig', array(
+        return $this->render('@AgnezCore/Param/ClassesDetail.html.twig', array(
             'form' => $form->createView(),
         ));
     }
@@ -239,14 +254,22 @@ class DefaultController extends Controller{
                 $em->persist($user);
                 $em->flush();
 
-                $request->getSession()->getFlashBag()->add('notice', 'EDT bien enregistré.');
+                return $this->redirectToRoute('agnez_core_validInitEdt');
+
             }
         }
 
 
-        return $this->render('@AgnezCore/Edt/edt.html.twig', array(
+        return $this->render('@AgnezCore/Param/edt.html.twig', array(
             'form' => $form->createView(),
         ));
+    }
+
+     /**
+     * @Route("/edt/validInit", name="agnez_core_validInitEdt")
+     */
+    public function validInitEdtAction(Request $request){
+        return $this->render('@AgnezCore/Param/validInitEdt.html.twig');
     }
 
     /**
@@ -280,7 +303,10 @@ class DefaultController extends Controller{
         foreach($listeHeures as $heure){
             $em->persist($heure);
         }
+        $user->setInitialized(1);
+        $em->persist($user);
         $em->flush();
+
 
         return $this->redirectToRoute('agnez_core_homepage');
     }

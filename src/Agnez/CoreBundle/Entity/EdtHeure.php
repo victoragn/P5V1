@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class EdtHeure
 {
     /**
-     * @ORM\OneToMany(targetEntity="Agnez\CoreBundle\Entity\Event", mappedBy="edtHeure")
+     * @ORM\OneToMany(targetEntity="Agnez\CoreBundle\Entity\Event", mappedBy="edtHeure",cascade={"all"})
      */
     private $events;
 

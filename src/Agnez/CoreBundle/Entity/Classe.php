@@ -19,7 +19,7 @@ class Classe
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="Agnez\CoreBundle\Entity\EdtHeure", mappedBy="classe")
+     * @ORM\OneToMany(targetEntity="Agnez\CoreBundle\Entity\EdtHeure", mappedBy="classe",cascade={"all"})
      */
     private $edtHeures;
 
