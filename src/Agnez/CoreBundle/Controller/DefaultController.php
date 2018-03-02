@@ -270,7 +270,11 @@ class DefaultController extends Controller{
         if (!$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirectToRoute('fos_user_security_login');
         }else{
+            $user=$this->getUser();
             $user->setInitialized(2);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
             return $this->redirectToRoute('agnez_core_edt');
         }
     }
@@ -300,6 +304,7 @@ class DefaultController extends Controller{
                 if ($form->isValid()) {
                     $data=$form->getData();
                     $user->setHebdoEDT($data);
+                    $this->getUser()->setInitialized(3);
                     $em = $this->getDoctrine()->getManager();
 
                     $em->persist($user);

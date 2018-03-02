@@ -2,17 +2,16 @@
 
 {% block body %}
 
-{% if app.user.initialized==0 %}
-{{app.user.initialized}}
+{% if app.user.initialized==4 %}
     <button><a href="{{ path('agnez_core_homepage') }}">Retour à l'accueil</a></button>
 {% endif %}
-<button><a href="{{ path('agnez_core_edt') }}">Définir l'emploi du temps</a></button>
+<button><a href="{{ path('agnez_core_initClasses') }}">Etape précedente (Noms des classes) </a></button>
   Choisissez une classe pour y entrer les élèves :
 
     <ul class="classes">
         {% if nomClasses|length==0 %}
             Veuillez aller ajouter des classes pour pouvoir y ajouter des élèves
-            <button><a href="{{ path('agnez_core_classes') }}">Définir les classes</a></button>
+            <button><a href="{{ path('agnez_core_initClasses') }}">Définir les classes</a></button>
         {%endif%}
 
         {% for classe in nomClasses %}
@@ -23,6 +22,13 @@
         {% endfor %}
     </ul>
 
-<button><a href="{{ path('agnez_core_validClasses') }}">Etape suivante (Emploi du temps)</a></button>
+<button>
+    {% if app.user.initialized==1 %}
+    <a href="{{ path('agnez_core_validClasses') }}">
+    {% else %}
+    <a href="{{ path('agnez_core_edt') }}">
+    {% endif %}
+        Etape suivante (Emploi du temps)</a>
+</button>
 
 {% endblock %}
