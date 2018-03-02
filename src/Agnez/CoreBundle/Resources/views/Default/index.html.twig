@@ -6,11 +6,9 @@
     <table>
         <tr>
             <th></th>
-            <th>Lundi</th>
-            <th>Mardi</th>
-            <th>Mercredi</th>
-            <th>Jeudi</th>
-            <th>Vendredi</th>
+            {%for l in 0..4 %}
+                <th>{{tabEnteteSem[l]}}</th>
+            {% endfor %}
         </tr>
         {% set colonne1 = ['8h-9h','9h-10h','10h-11h','11h-12h','14h-15h','15h-16h','16h-17h','17h-18h'] %}
         {% for i in  1..8 %}
@@ -36,7 +34,7 @@
     </table>
 
     {% if message is defined %}
-    <p class="messageInfo">{{message}}</p>
+        <p class="messageInfo">{{message}}</p>
     {% endif %}
 
     {% if form is defined %}

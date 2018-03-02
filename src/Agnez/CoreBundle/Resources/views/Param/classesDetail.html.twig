@@ -4,6 +4,7 @@
 <button><a href="{{ path('agnez_core_choixClasse') }}">Retour au choix de la classe</a></button>
 La classe en détail
 {{ form_start(form) }}
+{{ form_errors(form) }}
 {{ form_row(form.eleves) }}
 <a href="#" id="add_eleve" class="btn btn-default">Ajouter un eleve</a>
 {{ form_end(form) }}

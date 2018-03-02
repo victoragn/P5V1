@@ -3,12 +3,14 @@
 namespace Agnez\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Eleve
  *
  * @ORM\Table(name="agnez_eleve")
  * @ORM\Entity(repositoryClass="Agnez\CoreBundle\Repository\EleveRepository")
+ * @UniqueEntity(fields={"nom","prenom","classe"}, message="Un élève est présent 2 fois dans la classe")
  */
 class Eleve
 {

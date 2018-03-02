@@ -9,15 +9,15 @@
   Choisissez une classe pour y entrer les élèves :
 
     <ul class="classes">
-        {% if nomClasses|length==0 %}
+        {% if classes|length==0 %}
             Veuillez aller ajouter des classes pour pouvoir y ajouter des élèves
             <button><a href="{{ path('agnez_core_initClasses') }}">Définir les classes</a></button>
         {%endif%}
 
-        {% for classe in nomClasses %}
+        {% for classe in classes %}
 
-        <p>{{classe}}</p>
-        <button class="gererClasse"><a href="{{ path('agnez_core_classeDetail', {'id': classe}) }}">Voir la classe</a></button>
+        <p>{{classe.name}} : {{classe.eleves|length}} élèves enregistrés</p>
+        <button class="gererClasse"><a href="{{ path('agnez_core_classeDetail', {'id': classe.name}) }}">Voir la classe</a></button>
 
         {% endfor %}
     </ul>

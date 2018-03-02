@@ -62,5 +62,19 @@ class AgnezServiceDate{
         return $date;
     }
 
+    public function getDateSem($numSem){
+        $date= new \DateTime($this->dateRentree->format('Y-m-d'));
+        $date->add(new DateInterval('P'.($numSem -1) * 7 .'D'));
+        $result=array();
+        for($i=0;$i<5;$i++){
+            date_default_timezone_set('Europe/Paris');
+            setlocale(LC_TIME, 'fr_FR.utf8','fra');
+            $result[]=utf8_encode(strftime("%a %d %b", strtotime($date->format('m/d/Y')) ));
+            $date->add(new DateInterval('P1D'));
+        }
+
+        return $result;
+    }
+
 
 }

@@ -4,6 +4,7 @@ namespace Agnez\UserBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
@@ -36,6 +37,7 @@ class User extends BaseUser
     private $hebdoEDT;
 
     /**
+     * @Assert\Valid
      * @ORM\OneToMany(targetEntity="Agnez\CoreBundle\Entity\Classe", mappedBy="user",cascade={"all"})
      */
     private $classes;

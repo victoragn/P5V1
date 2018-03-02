@@ -3,12 +3,15 @@
 namespace Agnez\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Classe
  *
  * @ORM\Table(name="agnez_classe")
  * @ORM\Entity(repositoryClass="Agnez\CoreBundle\Repository\ClasseRepository")
+ * @UniqueEntity(fields={"name","user"}, message="Une classe avec ce nom existe deja.")
  */
 class Classe
 {
@@ -40,6 +43,8 @@ class Classe
     private $name;
 
     /**
+     * @Assert\Valid
+     * @Assert\Count(max = 30, maxMessage = "Une classe ne peut contenir plus de 30 élèves.")
      * @ORM\OneToMany(targetEntity="Agnez\CoreBundle\Entity\Eleve", mappedBy="classe",cascade={"all"})
      */
     private $eleves;

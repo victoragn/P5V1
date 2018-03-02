@@ -49,6 +49,9 @@ class DefaultController extends Controller{
             }
 
             $servicedate = $this->container->get('agnez_core.servicedate');
+            $tabEnteteSem=$servicedate->getDateSem($sem);
+            $message='';
+
             if ($sem==0){//si la semaine n'est pas définie, envoie sur la semaine actuelle
                 $sem=$servicedate->numSem(new DateTime());
                 return $this->redirectToRoute('agnez_core_homepage',array('sem'=>$sem));
@@ -61,7 +64,6 @@ class DefaultController extends Controller{
 
                 $listeHeuresSem=$servicegetSem->getSem($this->getUser(),$sem,$repository);
 
-
                 if($numHeure!=0){/*Si une heure est selectionnée*/
                     foreach($listeHeuresSem as $heure){/*Trouve l'heure avec son id et l'enregistre dans heureSelec*/
                         if($heure->getId()==$numHeure){
@@ -72,11 +74,7 @@ class DefaultController extends Controller{
                     $eleves=$heureSelec->getClasse()->getEleves();
 
                     if(count($eleves)==0){
-                        return $this->render('@AgnezCore/Default/index.html.twig', array(
-                            'listeHeures' => $listeHeuresSem,
-                            'numSem' => $sem,
-                            'message' => 'Veuillez remplir des élèves pour cette classe !'
-                        ));
+                        $message=$message.'Veuillez remplir des élèves pour cette classe !';
                     }else{
                         $form=$this->createFormBuilder()
                             ->add('tabOubliClasse', OubliClasseType::class,array('heure' =>$heureSelec))
@@ -121,19 +119,23 @@ class DefaultController extends Controller{
                             }
                         }
                         return $this->render('@AgnezCore/Default/index.html.twig', array(
-                            'listeHeures' => $listeHeuresSem,
-                            'numSem' => $sem,
-                            'form' => $form->createView(),
-                            'heureSelec' => $heureSelec
+                            'listeHeures'  => $listeHeuresSem,
+                            'numSem'       => $sem,
+                            'form'         => $form->createView(),
+                            'heureSelec'   => $heureSelec,
+                            'tabEnteteSem' => $tabEnteteSem,
+                            'message'      => $message
                         ));
                     }
-                }else{
-                    return $this->render('@AgnezCore/Default/index.html.twig', array(
-                        'listeHeures' => $listeHeuresSem,
-                        'numSem' => $sem,
-                        'message' => 'Sélectionnez une heure de la semaine'
-                    ));
+
                 }
+                return $this->render('@AgnezCore/Default/index.html.twig', array(
+                    'listeHeures'  => $listeHeuresSem,
+                    'numSem'       => $sem,
+                    'message'      => 'Sélectionnez une heure de la semaine',
+                    'tabEnteteSem' => $tabEnteteSem,
+                    'message'      => $message
+                ));
             }
         }
     }
@@ -202,12 +204,8 @@ class DefaultController extends Controller{
 
             $user = $this->getUser();
             $classes=$user->getClasses();
-            $nomClasses=array();
-            foreach($classes as $classe){
-                $nomClasses[]=$classe->getName();
-            }
             return $this->render('@AgnezCore/Param/choixClasse.html.twig', array(
-                'nomClasses' => $nomClasses,
+                'classes' => $classes,
             ));
         }
     }
