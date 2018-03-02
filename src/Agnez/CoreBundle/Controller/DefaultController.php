@@ -35,8 +35,17 @@ class DefaultController extends Controller{
             return $this->redirectToRoute('fos_user_security_login');
         }else{
 
-            if($this->getUser()->getInitialized()==0){// si le user n'a pas initialisé une premiere fois va vers la page des parametres
-                return $this->redirectToRoute('agnez_core_param');
+            if($this->getUser()->getInitialized()==0){// si le user n'a pas initialisé une premiere fois va vers la page de creation des classes
+                return $this->redirectToRoute('agnez_core_initClasses');
+            }
+            if($this->getUser()->getInitialized()==1){// si le user a deja init les classes il va vers la page de choix des classes
+                return $this->redirectToRoute('agnez_core_choixClasse');
+            }
+            if($this->getUser()->getInitialized()==2){// si le user a deja init les classes il va vers la page de choix des classes
+                return $this->redirectToRoute('agnez_core_edt');
+            }
+            if($this->getUser()->getInitialized()==3){// si le user a deja init les classes il va vers la page de choix des classes
+                return $this->redirectToRoute('agnez_core_validInitEdt');
             }
 
             $servicedate = $this->container->get('agnez_core.servicedate');
@@ -169,7 +178,7 @@ class DefaultController extends Controller{
                             $em->remove($classe);
                         }
                     }
-
+                    $user->setInitialized(1);
                     $em->persist($user);
                     $em->flush();
                     return $this->redirectToRoute('agnez_core_choixClasse');
@@ -252,6 +261,20 @@ class DefaultController extends Controller{
             ));
         }
     }
+
+    /**
+     * @Route("/validClasses", name="agnez_core_validClasses")
+     */
+    public function validClassesAction(){
+        $securityContext = $this->container->get('security.authorization_checker');
+        if (!$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirectToRoute('fos_user_security_login');
+        }else{
+            $user->setInitialized(2);
+            return $this->redirectToRoute('agnez_core_edt');
+        }
+    }
+
 
     /**
      * @Route("/edt", name="agnez_core_edt")
@@ -342,7 +365,7 @@ class DefaultController extends Controller{
             foreach($listeHeures as $heure){
                 $em->persist($heure);
             }
-            $user->setInitialized(1);
+            $user->setInitialized(4);
             $em->persist($user);
             $em->flush();
 

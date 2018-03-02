@@ -21,9 +21,9 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="initialized", type="boolean")
+     * @ORM\Column(name="initialized", type="integer")
      */
     private $initialized=0; /*vaut false tant que l'on a pas créé les edtHeures grace à hebdoEDT*/
 
@@ -39,31 +39,6 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="Agnez\CoreBundle\Entity\Classe", mappedBy="user",cascade={"all"})
      */
     private $classes;
-
-
-    /**
-     * Set initialized
-     *
-     * @param boolean $initialized
-     *
-     * @return User
-     */
-    public function setInitialized($initialized)
-    {
-        $this->initialized = $initialized;
-
-        return $this;
-    }
-
-    /**
-     * Get initialized
-     *
-     * @return boolean
-     */
-    public function getInitialized()
-    {
-        return $this->initialized;
-    }
 
     /**
      * Set hebdoEDT
@@ -122,5 +97,29 @@ class User extends BaseUser
     public function getClasses()
     {
         return $this->classes;
+    }
+
+    /**
+     * Set initialized
+     *
+     * @param integer $initialized
+     *
+     * @return User
+     */
+    public function setInitialized($initialized)
+    {
+        $this->initialized = $initialized;
+
+        return $this;
+    }
+
+    /**
+     * Get initialized
+     *
+     * @return integer
+     */
+    public function getInitialized()
+    {
+        return $this->initialized;
     }
 }

@@ -1,7 +1,11 @@
 {% extends "@AgnezCore/layout.html.twig" %}
 
 {% block body %}
-<button><a href="{{ path('agnez_core_homepage') }}">Retour à l'accueil</a></button>
+
+{% if app.user.initialized==0 %}
+{{app.user.initialized}}
+    <button><a href="{{ path('agnez_core_homepage') }}">Retour à l'accueil</a></button>
+{% endif %}
 <button><a href="{{ path('agnez_core_edt') }}">Définir l'emploi du temps</a></button>
   Choisissez une classe pour y entrer les élèves :
 
@@ -18,5 +22,7 @@
 
         {% endfor %}
     </ul>
+
+<button><a href="{{ path('agnez_core_validClasses') }}">Etape suivante (Emploi du temps)</a></button>
 
 {% endblock %}
