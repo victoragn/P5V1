@@ -133,7 +133,12 @@ class DefaultController extends Controller{
      * @Route("/param", name="agnez_core_param")
      */
     public function paramAction(){
-        return $this->render('@AgnezCore/Param/param.html.twig');
+        $securityContext = $this->container->get('security.authorization_checker');
+        if (!$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirectToRoute('fos_user_security_login');
+        }else{
+            return $this->render('@AgnezCore/Param/param.html.twig');
+        }
     }
 
 
@@ -141,174 +146,209 @@ class DefaultController extends Controller{
      * @Route("/initClasses", name="agnez_core_initClasses")
      */
     public function initClassesAction(Request $request){
-        $user = $this->getUser();
-        $originalClasses = new ArrayCollection();
-        foreach ($user->getClasses() as $classe) {
-            $originalClasses->add($classe);
-        }
-        $form=$this->createForm(UserType::class,$user);
+        $securityContext = $this->container->get('security.authorization_checker');
+        if (!$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirectToRoute('fos_user_security_login');
+        }else{
 
-        if ($request->isMethod('POST')) {
-            $form->handleRequest($request);
-
-            if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-
-                foreach ($originalClasses as $classe) {
-                    if (false === $user->getClasses()->contains($classe)) {
-                        $em->remove($classe);
-                    }
-                }
-
-                $em->persist($user);
-                $em->flush();
-                return $this->redirectToRoute('agnez_core_choixClasse');
-
+            $user = $this->getUser();
+            $originalClasses = new ArrayCollection();
+            foreach ($user->getClasses() as $classe) {
+                $originalClasses->add($classe);
             }
+            $form=$this->createForm(UserType::class,$user);
+
+            if ($request->isMethod('POST')) {
+                $form->handleRequest($request);
+
+                if ($form->isValid()) {
+                    $em = $this->getDoctrine()->getManager();
+
+                    foreach ($originalClasses as $classe) {
+                        if (false === $user->getClasses()->contains($classe)) {
+                            $em->remove($classe);
+                        }
+                    }
+
+                    $em->persist($user);
+                    $em->flush();
+                    return $this->redirectToRoute('agnez_core_choixClasse');
+
+                }
+            }
+            return $this->render('@AgnezCore/Param/classes.html.twig', array(
+                'form' => $form->createView(),
+            ));
         }
-        return $this->render('@AgnezCore/Param/classes.html.twig', array(
-            'form' => $form->createView(),
-        ));
     }
 
     /**
      * @Route("/classes", name="agnez_core_choixClasse")
      */
     public function choixClasseAction(){
-        $user = $this->getUser();
-        $classes=$user->getClasses();
-        $nomClasses=array();
-        foreach($classes as $classe){
-            $nomClasses[]=$classe->getName();
+        $securityContext = $this->container->get('security.authorization_checker');
+        if (!$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirectToRoute('fos_user_security_login');
+        }else{
+
+            $user = $this->getUser();
+            $classes=$user->getClasses();
+            $nomClasses=array();
+            foreach($classes as $classe){
+                $nomClasses[]=$classe->getName();
+            }
+            return $this->render('@AgnezCore/Param/choixClasse.html.twig', array(
+                'nomClasses' => $nomClasses,
+            ));
         }
-        return $this->render('@AgnezCore/Param/choixClasse.html.twig', array(
-            'nomClasses' => $nomClasses,
-        ));
     }
 
     /**
      * @Route("/classes/{id}", name="agnez_core_classeDetail")
      */
     public function gestionClassesDetailAction(Request $request, $id){
-        $user = $this->getUser();
-        $classes=$user->getClasses();
-        $nbClasses=$classes->count();
-        for ($i=0;$i<$nbClasses;$i++){
-            if($classes[$i]->getName()===$id){
-                $nbClasseActuelle=$i;
-                $classeActuelle=$classes[$i];
-            }
-        }
+        $securityContext = $this->container->get('security.authorization_checker');
+        if (!$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirectToRoute('fos_user_security_login');
+        }else{
 
-        $originalEleves = new ArrayCollection();
-        foreach ($classeActuelle->getEleves() as $eleve) {
-            $originalEleves->add($eleve);
-        }
-
-        $form=$this->createForm(Classe2Type::class,$classeActuelle);
-
-        if ($request->isMethod('POST')) {
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-
-                foreach ($originalEleves as $eleve) {
-                    if (false === $classeActuelle->getEleves()->contains($eleve)) {
-                        $em->remove($eleve);
-                    }
+            $user = $this->getUser();
+            $classes=$user->getClasses();
+            $nbClasses=$classes->count();
+            for ($i=0;$i<$nbClasses;$i++){
+                if($classes[$i]->getName()===$id){
+                    $nbClasseActuelle=$i;
+                    $classeActuelle=$classes[$i];
                 }
-
-                $em->persist($classeActuelle);
-                $em->flush();
-
-                return $this->redirectToRoute('agnez_core_choixClasse');
             }
-        }
 
-        return $this->render('@AgnezCore/Param/ClassesDetail.html.twig', array(
-            'form' => $form->createView(),
-        ));
+            $originalEleves = new ArrayCollection();
+            foreach ($classeActuelle->getEleves() as $eleve) {
+                $originalEleves->add($eleve);
+            }
+
+            $form=$this->createForm(Classe2Type::class,$classeActuelle);
+
+            if ($request->isMethod('POST')) {
+                $form->handleRequest($request);
+                if ($form->isValid()) {
+                    $em = $this->getDoctrine()->getManager();
+
+                    foreach ($originalEleves as $eleve) {
+                        if (false === $classeActuelle->getEleves()->contains($eleve)) {
+                            $em->remove($eleve);
+                        }
+                    }
+
+                    $em->persist($classeActuelle);
+                    $em->flush();
+
+                    return $this->redirectToRoute('agnez_core_choixClasse');
+                }
+            }
+
+            return $this->render('@AgnezCore/Param/ClassesDetail.html.twig', array(
+                'form' => $form->createView(),
+            ));
+        }
     }
 
     /**
      * @Route("/edt", name="agnez_core_edt")
      */
     public function gestionEdtAction(Request $request){
-        $user = $this->getUser();
-        $classes=$user->getClasses();
-        $hebdoEDT=array();
-        if( !empty($user->getHebdoEDT()) ){
-            $hebdoEDT=$user->getHebdoEDT();
-        }
-        $form=$this->createFormBuilder()
-            ->add('hebdoEdt', User2Type::class,array('current_user' => $user))
-            ->getForm();
+        $securityContext = $this->container->get('security.authorization_checker');
+        if (!$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirectToRoute('fos_user_security_login');
+        }else{
 
-        if ($request->isMethod('POST')) {
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-                $data=$form->getData();
-                $user->setHebdoEDT($data);
-                $em = $this->getDoctrine()->getManager();
-
-                $em->persist($user);
-                $em->flush();
-
-                return $this->redirectToRoute('agnez_core_validInitEdt');
-
+            $user = $this->getUser();
+            $classes=$user->getClasses();
+            $hebdoEDT=array();
+            if( !empty($user->getHebdoEDT()) ){
+                $hebdoEDT=$user->getHebdoEDT();
             }
+            $form=$this->createFormBuilder()
+                ->add('hebdoEdt', User2Type::class,array('current_user' => $user))
+                ->getForm();
+
+            if ($request->isMethod('POST')) {
+                $form->handleRequest($request);
+                if ($form->isValid()) {
+                    $data=$form->getData();
+                    $user->setHebdoEDT($data);
+                    $em = $this->getDoctrine()->getManager();
+
+                    $em->persist($user);
+                    $em->flush();
+
+                    return $this->redirectToRoute('agnez_core_validInitEdt');
+
+                }
+            }
+
+
+            return $this->render('@AgnezCore/Param/edt.html.twig', array(
+                'form' => $form->createView(),
+            ));
         }
-
-
-        return $this->render('@AgnezCore/Param/edt.html.twig', array(
-            'form' => $form->createView(),
-        ));
     }
 
      /**
      * @Route("/edt/validInit", name="agnez_core_validInitEdt")
      */
     public function validInitEdtAction(Request $request){
-        return $this->render('@AgnezCore/Param/validInitEdt.html.twig');
+        $securityContext = $this->container->get('security.authorization_checker');
+        if (!$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirectToRoute('fos_user_security_login');
+        }else{
+            return $this->render('@AgnezCore/Param/validInitEdt.html.twig');
+        }
     }
 
     /**
      * @Route("/edt/init", name="agnez_core_edt_init")
      */
     public function initEdtAction(Request $request){
-        $user = $this->getUser();
-        $classes=$user->getClasses();
-        $hebdoEDT=$user->getHebdoEDT();
+        $securityContext = $this->container->get('security.authorization_checker');
+        if (!$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirectToRoute('fos_user_security_login');
+        }else{
 
-        /*Supprime les anciennes heures*/
-        $em = $this->getDoctrine()->getManager();
-        $repository = $this
-          ->getDoctrine()
-          ->getManager()
-          ->getRepository('AgnezCoreBundle:EdtHeure')
-        ;
-        foreach ($classes as $classe){
-            $id=$classe->getId();
-            $listHeures = $repository->findBy( array('classe' => $id) );
-            foreach($listHeures as $heure){
-                $em->remove($heure);
-                $em->flush();
+            $user = $this->getUser();
+            $classes=$user->getClasses();
+            $hebdoEDT=$user->getHebdoEDT();
+
+            /*Supprime les anciennes heures*/
+            $em = $this->getDoctrine()->getManager();
+            $repository = $this
+              ->getDoctrine()
+              ->getManager()
+              ->getRepository('AgnezCoreBundle:EdtHeure')
+            ;
+            foreach ($classes as $classe){
+                $id=$classe->getId();
+                $listHeures = $repository->findBy( array('classe' => $id) );
+                foreach($listHeures as $heure){
+                    $em->remove($heure);
+                    $em->flush();
+                }
             }
+
+            /*Ajout des nouvelles heures*/
+            $serviceinit = $this->container->get('agnez_core.serviceinitEdt');
+            $serviceinit->setPlaces( $this->getUser() );
+            $listeHeures=$serviceinit->setNewHeures( $this->getUser() );
+            foreach($listeHeures as $heure){
+                $em->persist($heure);
+            }
+            $user->setInitialized(1);
+            $em->persist($user);
+            $em->flush();
+
+
+            return $this->redirectToRoute('agnez_core_homepage');
         }
-
-        /*Ajout des nouvelles heures*/
-        $serviceinit = $this->container->get('agnez_core.serviceinitEdt');
-        $serviceinit->setPlaces( $this->getUser() );
-        $listeHeures=$serviceinit->setNewHeures( $this->getUser() );
-        foreach($listeHeures as $heure){
-            $em->persist($heure);
-        }
-        $user->setInitialized(1);
-        $em->persist($user);
-        $em->flush();
-
-
-        return $this->redirectToRoute('agnez_core_homepage');
     }
 
 
