@@ -8,7 +8,7 @@
 <button><a href="{{ path('agnez_core_initClasses') }}">Etape précedente (Noms des classes) </a></button>
   Choisissez une classe pour y entrer les élèves :
 
-    <ul class="classes">
+    <ul class="ulChoixClasses">
         {% if classes|length==0 %}
             Veuillez aller ajouter des classes pour pouvoir y ajouter des élèves
             <button><a href="{{ path('agnez_core_initClasses') }}">Définir les classes</a></button>
@@ -16,8 +16,10 @@
 
         {% for classe in classes %}
 
-        <p>{{classe.name}} : {{classe.eleves|length}} élèves enregistrés</p>
-        <button class="gererClasse"><a href="{{ path('agnez_core_classeDetail', {'id': classe.name}) }}">Voir la classe</a></button>
+        <li class="liChoixClasses">
+            <p>{{classe.name}} : {{classe.eleves|length}} élèves enregistrés</p>
+            <button class="gererClasse"><a href="{{ path('agnez_core_classeDetail', {'id': classe.name}) }}">Voir la classe</a></button>
+        </li>
 
         {% endfor %}
     </ul>
