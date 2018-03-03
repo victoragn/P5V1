@@ -1,1 +1,25 @@
-body{background-color: blue;}
+body{
+
+}
+
+#header{
+    display: flex;
+    flex-direction: row;
+}
+
+.content{
+}
+
+.liChoixClasses{
+    list-style-type: none;
+    border : 1px solid black;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: max-content;
+}
+
+.liChoixClasses p{
+    width: max-content;
+    margin: 5px 10px;
+}

@@ -14,7 +14,10 @@ class ClasseType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name',TextType::class, array('label' => 'Nom'));
+        $builder->add('name',TextType::class, array(
+            'label' => 'Nom',
+            'attr'=> array('class'=>'divFormClasse')
+        ));
     }/**
      * {@inheritdoc}
      */

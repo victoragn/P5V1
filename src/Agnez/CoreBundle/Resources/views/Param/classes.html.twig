@@ -6,7 +6,12 @@
 {% endif %}
   La gestion des classes
 
-{{ form_start(form) }}
+{{ form_start(form, { 'attr': {'id': 'formClasses'}}) }}
+<div id="agnez_userbundle_user_classes">
+    {% for classe in form.classes %}
+        {{form_widget(classe, { 'attr': {'class': 'calendar'}}) }}
+    {% endfor %}
+</div>
 {{ form_row(form.classes) }}
 <a href="#" id="add_classe" class="btn btn-default">Ajouter une classe</a>
 {{ form_end(form) }}

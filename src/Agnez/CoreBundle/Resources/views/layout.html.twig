@@ -19,8 +19,8 @@
   <body>
   <div id="mainContainer">
       <div id="header" class="">
-          <div class="col-xs-3"><a href="{{ path('agnez_core_homepage') }}"><h1>Gestion de classe</h1></a></div>
-          <div class="col-xs-9">
+          <div id="headerLogo"><a href="{{ path('agnez_core_homepage') }}"><h1>Gestion de classe</h1></a></div>
+          <div id="headerUser">
               {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 <ul>
                     <li>Connecté en tant que {{ app.user.username }}</li>
