@@ -7,7 +7,7 @@
   La gestion des classes
 
 {{ form_start(form, { 'attr': {'id': 'formClasses'}}) }}
-<div id="agnez_userbundle_user_classes">
+<div id="agnez_userbundle_user_classes" data-prototype="<div id=&quot;agnez_userbundle_user_classes___name__&quot; class=&quot;ligneFormClasses&quot;><div><label for=&quot;agnez_userbundle_user_classes___name___name&quot; class=&quot;required&quot;>Nom</label><input type=&quot;text&quot; id=&quot;agnez_userbundle_user_classes___name___name&quot; name=&quot;agnez_userbundle_user[classes][__name__][name]&quot; required=&quot;required&quot; /></div></div>">
     {% for classe in form.classes %}
         {{form_widget(classe, { 'attr': {'class': 'ligneFormClasses'}}) }}
     {% endfor %}
@@ -39,7 +39,6 @@
       // - le texte "__name__label__" qu'il contient par le label du champ
       // - le texte "__name__" qu'il contient par le numéro du champ
       var template = $container.attr('data-prototype')
-        .replace(/__name__label__/g, 'Classe n°' + (index+1))
         .replace(/__name__/g,        index)
       ;
       // On crée un objet jquery qui contient ce template
