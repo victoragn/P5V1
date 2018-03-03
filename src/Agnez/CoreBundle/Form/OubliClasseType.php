@@ -28,7 +28,7 @@ class OubliClasseType extends AbstractType
             }
 
             $builder->add('oubli'.$eleve->getPlace(), CheckboxType::class, array(
-                'label'    => $eleve->getPrenom(),
+                'label'    => $eleve->getPrenom().' '.$eleve->getNom(),
                 'required' => false,
                 'data'     => $data
             ));

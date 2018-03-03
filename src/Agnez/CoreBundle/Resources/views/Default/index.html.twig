@@ -1,67 +1,86 @@
 {% extends "@AgnezCore/layout.html.twig" %}
 
 {% block body %}
-    <button><a href="{{ path('agnez_core_homepage',{'sem' : numSem - 1}) }}">Semaine précedente</a></button>
-    <button><a href="{{ path('agnez_core_homepage',{'sem' : numSem + 1}) }}">Semaine suivante</a></button>
-    <table>
-        <tr>
-            <th></th>
-            {%for l in 0..4 %}
-                <th>{{tabEnteteSem[l]}}</th>
-            {% endfor %}
-        </tr>
-        {% set colonne1 = ['8h-9h','9h-10h','10h-11h','11h-12h','14h-15h','15h-16h','16h-17h','17h-18h'] %}
-        {% for i in  1..8 %}
-        <tr>
-            <td>{{colonne1[i-1]}}</td>
-            {% for j in  1..5 %}
+    <div id="content_flex_index">
+        <div id="content_edt_sem">
+            <div id="content_button_sem">
+                <button><a href="{{ path('agnez_core_homepage',{'sem' : numSem - 1}) }}">Semaine précedente</a></button>
+                <button><a href="{{ path('agnez_core_homepage',{'sem' : numSem + 1}) }}">Semaine suivante</a></button>
+            </div>
+            <div id="table_edt_sem">
+                <table>
+                    <tr>
+                        <th></th>
+                        {%for l in 0..4 %}
+                            <th>{{tabEnteteSem[l]}}</th>
+                        {% endfor %}
+                    </tr>
+                    {% set colonne1 = ['8h-9h','9h-10h','10h-11h','11h-12h','14h-15h','15h-16h','16h-17h','17h-18h'] %}
+                    {% for i in  1..8 %}
+                    {% if i==5 %}
+                            <tr id="ligne_tab_repas"><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    {% endif %}
+                    <tr>
+                        <td>{{colonne1[i-1]}}</td>
+                        {% for j in  1..5 %}
 
-                    {% set hTrouvee = '' %}
-                    {% for heure in listeHeures%}
-                        {% if heure.numHeure==j*10+i %}
-                            {% set hTrouvee = heure %}
-                        {% endif %}
+                                {% set hTrouvee = '' %}
+                                {% for heure in listeHeures%}
+                                    {% if heure.numHeure==j*10+i %}
+                                        {% set hTrouvee = heure %}
+                                    {% endif %}
+                                {% endfor %}
+                                {% if hTrouvee !='' %}
+                                    <td><a href="{{ path('agnez_core_homepage',{'sem' : numSem, 'numHeure' : hTrouvee.id}) }}">{{hTrouvee.classe.name}}</a></td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+
+                        {% endfor %}
+                    </tr>
                     {% endfor %}
-                    {% if hTrouvee !='' %}
-                        <td><a href="{{ path('agnez_core_homepage',{'sem' : numSem, 'numHeure' : hTrouvee.id}) }}">{{hTrouvee.classe.name}}</a></td>
-                    {% else %}
-                        <td></td>
-                    {% endif %}
+                </table>
+            </div>
+        </div>
 
-            {% endfor %}
-        </tr>
-        {% endfor %}
-    </table>
+        <div id="content_oubli_classe">
+        {% if message is defined %}
+            <p class="messageInfo">{{message}}</p>
+        {% endif %}
 
-    {% if message is defined %}
-        <p class="messageInfo">{{message}}</p>
-    {% endif %}
+        {% if form is defined %}
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+            <div id="tab_oubli_classe">
+                <table>
+                    <tr>
+                    {%for k in 1..30 %}
+                        {% if k <= heureSelec.classe.eleves|length %}
+                            <td>
+                                {{ form_widget(attribute(form.tabOubliClasse, 'oubli' ~ k ) ) }}
+                                <div class="td_label_oubli">{{ form_label(attribute(form.tabOubliClasse, 'oubli' ~ k ) ) }}</div>
+                            </td>
+                        {% else %}
+                            <td><div class="td_label_oubli"></div></td>
+                        {% endif %}
 
-    {% if form is defined %}
-        {{ form_start(form) }}
-        {{ form_errors(form) }}
-        <table>
-            <tr>
-            {%for k in 1..heureSelec.classe.eleves|length %}
+                        {% if k is divisibleby(2)%}
+                            {% if k is divisibleby(6 )%}
+                                </tr><tr>
+                            {% else %}
+                                <td class='couloirClasse'></td>
+                            {% endif %}
+                        {% endif %}
 
-                <td>{{ form_row(attribute(form.tabOubliClasse, 'oubli' ~ k ) ) }}</td>
-
-                {% if k is divisibleby(2)%}
-                    {% if k is divisibleby(6 )%}
-                        </tr><tr>
-                    {% else %}
-                        <td class='couloirClasse'></td>
-                    {% endif %}
-                {% endif %}
-
-            {% endfor %}
-            </tr>
-        </table>
-        {{ form_widget(form.tabOubliClasse.save, { 'label': 'Enregistrer les oublis' }) }}
-        {{ form_end(form) }}
-    {% endif %}
-
-
+                    {% endfor %}
+                    </tr>
+                </table>
+            </div>
+            {{ form_widget(form.tabOubliClasse.save, { 'label': 'Enregistrer les oublis' }) }}
+            {{ form_end(form) }}
+        {% endif %}
+        </div>
+    </div>
     <button><a href="{{ path('agnez_core_param') }}">Parametres</a></button>
 
 {% endblock %}
