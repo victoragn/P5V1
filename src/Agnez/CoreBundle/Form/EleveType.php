@@ -15,8 +15,14 @@ class EleveType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom',TextType::class)
-            ->add('prenom',TextType::class)
+            ->add('nom',TextType::class, array(
+                'label' => 'Nom',
+                'attr'=> array('class'=>'divFormElevesNom')
+            ))
+            ->add('prenom',TextType::class, array(
+                'label' => 'Prénom',
+                'attr'=> array('class'=>'divFormElevesPrenom')
+            ))
             ;
     }/**
      * {@inheritdoc}

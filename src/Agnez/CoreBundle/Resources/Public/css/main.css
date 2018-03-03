@@ -10,6 +10,14 @@ body{
 .content{
 }
 
+.ligneFormClasses{
+    margin: 10px 0;
+}
+
+.ligneFormClasses>div{
+    display: inline-block;
+}
+
 .liChoixClasses{
     list-style-type: none;
     border : 1px solid black;
@@ -17,9 +25,43 @@ body{
     flex-direction: row;
     flex-wrap: wrap;
     width: max-content;
+    margin: 5px;
+    padding: 5px;
 }
 
 .liChoixClasses p{
     width: max-content;
     margin: 5px 10px;
 }
+
+.liChoixClasses a{
+    text-decoration: none;
+    color: black;
+}
+
+.liChoixClasses a:hover{
+    color: blue;
+}
+
+.ligneFormEleves{
+    margin: 10px 0;
+    border : 1px solid black;
+    display: inline-block;
+    padding: 5px;
+}
+
+.ligneFormEleves>div{
+    display: inline-block;
+}
+
+.liChoixEleves{
+    list-style-type: none;
+    border : 1px solid black;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: max-content;
+    margin: 5px;
+    padding: 5px;
+}
+
