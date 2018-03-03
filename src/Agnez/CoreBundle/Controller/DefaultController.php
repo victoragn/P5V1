@@ -49,13 +49,13 @@ class DefaultController extends Controller{
             }
 
             $servicedate = $this->container->get('agnez_core.servicedate');
-            $tabEnteteSem=$servicedate->getDateSem($sem);
             $message='';
 
             if ($sem==0){//si la semaine n'est pas définie, envoie sur la semaine actuelle
                 $sem=$servicedate->numSem(new DateTime());
                 return $this->redirectToRoute('agnez_core_homepage',array('sem'=>$sem));
             }else{//sinon verifie l'authentification
+                $tabEnteteSem=$servicedate->getDateSem($sem);
                 $servicegetSem = $this->container->get('agnez_core.servicegetSem');
                 $repository = $this
                     ->getDoctrine()

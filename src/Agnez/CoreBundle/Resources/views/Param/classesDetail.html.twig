@@ -5,7 +5,7 @@
 La classe en détail
 {{ form_start(form, { 'attr': {'id': 'formEleves'}}) }}
 {{ form_errors(form) }}
-<div id="agnez_userbundle_classe_eleves" data-prototype="<div id=&quot;agnez_userbundle_classe_eleves___name__&quot; class=&quot;ligneFormEleves&quot;><div><label for=&quot;agnez_userbundle_classe_eleves___name___name&quot; class=&quot;required&quot;>Nom</label><input type=&quot;text&quot; id=&quot;agnez_userbundle_user_classes___name___name&quot; name=&quot;agnez_userbundle_user[classes][__name__][name]&quot; required=&quot;required&quot; /></div></div>">
+<div id="agnez_userbundle_classe_eleves" data-prototype="<div id=&quot;agnez_userbundle_classe_eleves___name__&quot; class=&quot;ligneFormEleves&quot;><div><label for=&quot;agnez_userbundle_classe_eleves___name___nom&quot; class=&quot;required&quot;>Nom</label><input type=&quot;text&quot; id=&quot;agnez_userbundle_classe_eleves___name___nom&quot; name=&quot;agnez_userbundle_classe[eleves][__name__][nom]&quot; required=&quot;required&quot; /></div><div><label for=&quot;agnez_userbundle_classe_eleves___name___prenom&quot; class=&quot;required&quot;>Prenom</label><input type=&quot;text&quot; id=&quot;agnez_userbundle_classe_eleves___name___prenom&quot; name=&quot;agnez_userbundle_classe[eleves][__name__][prenom]&quot; required=&quot;required&quot; /></div></div>">
     {% for eleve in form.eleves %}
         {{form_widget(eleve, { 'attr': {'class': 'ligneFormEleves'}}) }}
     {% endfor %}
