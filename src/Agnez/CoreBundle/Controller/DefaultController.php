@@ -180,7 +180,9 @@ class DefaultController extends Controller{
                             $em->remove($classe);
                         }
                     }
-                    $user->setInitialized(1);
+                    if($user->getInitialized()!=4){/*si le compte n'a jamais été initialisé jusqu'au bout*/
+                        $user->setInitialized(1);
+                    }
                     $em->persist($user);
                     $em->flush();
                     return $this->redirectToRoute('agnez_core_choixClasse');
@@ -269,7 +271,9 @@ class DefaultController extends Controller{
             return $this->redirectToRoute('fos_user_security_login');
         }else{
             $user=$this->getUser();
-            $user->setInitialized(2);
+            if($user->getInitialized()!=4){/*si le compte n'a jamais été initialisé jusqu'au bout*/
+                        $user->setInitialized(2);
+                    }
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
@@ -302,7 +306,9 @@ class DefaultController extends Controller{
                 if ($form->isValid()) {
                     $data=$form->getData();
                     $user->setHebdoEDT($data);
-                    $this->getUser()->setInitialized(3);
+                    if($user->getInitialized()!=4){/*si le compte n'a jamais été initialisé jusqu'au bout*/
+                        $user->setInitialized(3);
+                    }
                     $em = $this->getDoctrine()->getManager();
 
                     $em->persist($user);
