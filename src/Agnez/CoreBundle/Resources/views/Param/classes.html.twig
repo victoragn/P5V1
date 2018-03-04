@@ -13,7 +13,9 @@
     {% endfor %}
 </div>
 <a href="#" id="add_classe" class="btn btn-default">Ajouter une classe</a>
-{{ form_end(form) }}
+{{ form_row(form.Envoyer)}}
+{{ form_rest(form) }}
+{{ form_end(form, {'render_rest': false}) }}
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
