@@ -7,21 +7,23 @@
   La gestion des classes
 
 {{ form_start(form, { 'attr': {'id': 'formClasses'}}) }}
-<div id="agnez_userbundle_user_classes" data-prototype="<div id=&quot;agnez_userbundle_user_classes___name__&quot; class=&quot;ligneFormClasses&quot;><div><label for=&quot;agnez_userbundle_user_classes___name___name&quot; class=&quot;required&quot;>Nom</label><input type=&quot;text&quot; id=&quot;agnez_userbundle_user_classes___name___name&quot; name=&quot;agnez_userbundle_user[classes][__name__][name]&quot; required=&quot;required&quot; /></div></div>">
+<div id="agnez_userbundle_user_classes1" data-prototype="<div id=&quot;agnez_userbundle_user_classes___name__&quot; class=&quot;ligneFormClasses&quot;><div><label for=&quot;agnez_userbundle_user_classes___name___name&quot; class=&quot;required&quot;>Nom</label><input type=&quot;text&quot; id=&quot;agnez_userbundle_user_classes___name___name&quot; name=&quot;agnez_userbundle_user[classes][__name__][name]&quot; required=&quot;required&quot; /></div></div>">
     {% for classe in form.classes %}
         {{form_widget(classe, { 'attr': {'class': 'ligneFormClasses'}}) }}
     {% endfor %}
 </div>
 <a href="#" id="add_classe" class="btn btn-default">Ajouter une classe</a>
 {{ form_row(form.Envoyer)}}
-{{ form_rest(form) }}
+<div class="hidden">
+    {{ form_rest(form) }}
+</div>
 {{ form_end(form, {'render_rest': false}) }}
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 <script type="text/javascript">
   $(document).ready(function() {
-    var $container = $('div#agnez_userbundle_user_classes');
+    var $container = $('div#agnez_userbundle_user_classes1');
     var index = $container.find(':input').length;
     $('#add_classe').click(function(e) {
       e.preventDefault(); // évite qu'un # apparaisse dans l'URL

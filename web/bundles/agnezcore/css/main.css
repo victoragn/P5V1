@@ -1,0 +1,141 @@
+body{
+    width: 90%;
+    margin: auto;
+    max-width: 1200px;
+}
+
+#header{
+    display: flex;
+    flex-direction: row;
+}
+
+.content{
+}
+
+.hidden{
+    display: none;
+}
+
+/*////////////////////////////// Index ////////////////////////*/
+#content_flex_index{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#content_button_sem{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#table_edt_sem td,#table_edt_sem th{
+    border: 1px solid black;
+    text-align: center;
+    padding: 5px;
+}
+
+.caseHeure{
+    height: 30px;
+    width: 80px;
+}
+.caseHeure a{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+#ligne_tab_repas{
+    height: 3px;
+    background-color: black;
+}
+
+.heureActivee{
+    background-color: deepskyblue;
+}
+
+.heureActivee a{
+    color: black;
+}
+
+#tab_oubli_classe td {
+    border: 1px solid black;
+}
+
+#tab_oubli_classe td input {
+    display: none;
+}
+
+.td_label_oubli{
+    height: 50px;
+    width: 80px;
+    overflow: hidden;
+}
+
+.td_label_oubli label{
+    height: 100%;
+    width: 100%;
+    margin:0;
+    text-align: center;
+}
+
+#tab_oubli_classe td input:checked + .td_label_oubli {
+    background-color: red;
+}
+
+.couloirClasse{
+    width: 20px;
+    background-color: black;
+}
+/*////////////////////////////// Classes ////////////////////////*/
+.ligneFormClasses{
+    margin: 10px 0;
+}
+
+.ligneFormClasses>div{
+    display: inline-block;
+}
+
+/*////////////////////////////// ChoixClasses ///////////////////////*/
+.liChoixClasses{
+    list-style-type: none;
+    border : 1px solid black;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: max-content;
+    margin: 5px;
+    padding: 5px;
+}
+
+.liChoixClasses p{
+    width: max-content;
+    margin: 5px 10px;
+}
+
+.liChoixClasses a{
+    text-decoration: none;
+    color: black;
+}
+
+.liChoixClasses a:hover{
+    color: blue;
+}
+
+/*////////////////// ClasseDetails ///////////////////////////*/
+#agnez_userbundle_classe_eleves{
+
+}
+
+.ligneFormEleves{
+    margin: 10px 0;
+    border : 1px solid black;
+    display: inline-block;
+    min-width: 51%;
+    padding: 5px;
+}
+
+.ligneFormEleves>div{
+    display: inline-block;
+}
+
