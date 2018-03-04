@@ -6,9 +6,37 @@
     <button><a href="{{ path('agnez_core_homepage') }}">Retour à l'accueil</a></button>
 {% endif %}
   La gestion de l'emploi du temps
+{% set tabEntete = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi']%}
+{% set colonne1 = ['8h-9h','9h-10h','10h-11h','11h-12h','14h-15h','15h-16h','16h-17h','17h-18h'] %}
 
 {{ form_start(form) }}
-{{ form_row(form) }}
-{{ form_end(form) }}
+<div id="table_edt_init">
+                <table>
+                    <tr>
+                        <th></th>
+                        {%for l in 0..4 %}
+                            <th>{{tabEntete[l]}}</th>
+                        {% endfor %}
+                    </tr>
+                    {% for i in  1..8 %}
+                    {% if i==5 %}
+                            <tr id="ligne_tab_repas"><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    {% endif %}
+                    <tr>
+                        <td>{{colonne1[i-1]}}</td>
+                        {% for j in  1..5 %}
+                            <td>
+                                {{form_widget( attribute(form.hebdoEdt, j~i) )}}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+{{form_widget(form.hebdoEdt.save, { 'label': 'Enregistrer l\'Emploi du temps '}) }}
+<div class="hidden">
+    {{ form_rest(form) }}
+</div>
+{{ form_end(form, {'render_rest': false}) }}
 
 {% endblock %}

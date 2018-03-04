@@ -39,7 +39,7 @@ class User2Type extends AbstractType
                     ));
             }
         }
-        $builder->add('Enregistrer l\'edt ',      SubmitType::class);
+        $builder->add('save',      SubmitType::class);
     }/**
      * {@inheritdoc}
      */

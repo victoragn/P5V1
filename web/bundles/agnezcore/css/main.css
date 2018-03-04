@@ -45,11 +45,6 @@ body{
     height: 100%;
 }
 
-#ligne_tab_repas{
-    height: 3px;
-    background-color: black;
-}
-
 .heureActivee{
     background-color: deepskyblue;
 }
@@ -138,4 +133,19 @@ body{
 .ligneFormEleves>div{
     display: inline-block;
 }
+
+/*////////////////// Init EDT ///////////////////////////*/
+#table_edt_init td,#table_edt_init th{
+    border: 1px solid black;
+    text-align: center;
+    padding: 5px;
+    width: 80px;
+    height: 40px;
+}
+
+#ligne_tab_repas td{
+    height: 3px;
+    background-color: black;
+}
+
 
