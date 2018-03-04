@@ -31,9 +31,13 @@
                                     {% endif %}
                                 {% endfor %}
                                 {% if hTrouvee !='' %}
-                                    <td><a href="{{ path('agnez_core_homepage',{'sem' : numSem, 'numHeure' : hTrouvee.id}) }}">{{hTrouvee.classe.name}}</a></td>
+                                    {% if heureSelec is defined and hTrouvee.id==heureSelec.id %}
+                                        <td class="heureActivee caseHeure"><a href="{{ path('agnez_core_homepage',{'sem' : numSem, 'numHeure' : hTrouvee.id}) }}"><span>{{hTrouvee.classe.name}}</span></a></td>
+                                    {% else %}
+                                        <td class="caseHeure"><a href="{{ path('agnez_core_homepage',{'sem' : numSem, 'numHeure' : hTrouvee.id}) }}"><span>{{hTrouvee.classe.name}}</span></a></td>
+                                    {% endif %}
                                 {% else %}
-                                    <td></td>
+                                    <td class="caseHeure"></td>
                                 {% endif %}
 
                         {% endfor %}
