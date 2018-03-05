@@ -12,6 +12,8 @@
 
         {% stylesheets 'bundles/agnezcore/css/*' filter='cssrewrite' %}
             <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+            <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">
             <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
     </head>
@@ -19,20 +21,15 @@
   <body>
   <div id="mainContainer">
       <div id="header" class="">
-          <div id="headerLogo"><a href="{{ path('agnez_core_homepage') }}"><h1>Gestion de classe</h1></a></div>
+          <div id="headerEmpty"></div>
+          <div id="headerLogo"><a href="{{ path('agnez_core_homepage') }}"><h1 class="animated fadeIn">Gestion de Classe</h1></a></div>
           <div id="headerUser">
-              {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                <ul>
-                    <li>Connecté en tant que {{ app.user.username }}</li>
-                    <li><a href="{{ path('fos_user_profile_show') }}">Voir le profil</a></li>
-                    <li><a href="{{ path('fos_user_security_logout') }}">Se deconnecter</a></li>
-                </ul>
-              {% else %}
-                <ul>
-                    <li>Veuillez vous connecter ou creez un compte :</li>
-                    <li><a href="{{ path('fos_user_security_login') }}">Connexion</a></li>
-                    <li><a href="{{ path('fos_user_registration_register') }}">Creer un compte</a></li>
-                </ul>
+              {% if app.request.attributes.get('_route') != 'fos_user_security_login' %}
+                  {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    <p>Bienvenue {{ app.user.username }}</p>
+                    <button class='btn btn-primary'><a href="{{ path('fos_user_profile_show') }}">Voir le profil</a></button>
+                    <button class='btn btn-primary'><a href="{{ path('fos_user_security_logout') }}">Se deconnecter</a></button>
+                  {% endif %}
               {% endif %}
           </div>
       </div>
@@ -43,7 +40,9 @@
     </div>
 
     <footer>
-      <p>The sky's the limit © {{ 'now'|date('Y') }} and beyond.</p>
+        <div>
+            <p>Victor AGNEZ © {{ 'now'|date('Y') }}</p>
+        </div>
     </footer>
   </div>
 

@@ -2,11 +2,54 @@ body{
     width: 90%;
     margin: auto;
     max-width: 1200px;
+    min-height: 100%;
+}
+
+h1{
+    font-family: 'Slabo 27px', serif;
+    font-size: 3.5em;
+    color: black;
 }
 
 #header{
     display: flex;
     flex-direction: row;
+    justify-content: space-between
+}
+
+#header a{
+    text-decoration: none;
+}
+
+.btn{
+    padding: 0;
+    margin: 3px 0;
+    box-sizing: border-box;
+}
+
+.btn a{
+    padding: 3px 10px;
+    box-sizing:border-box;
+    color: white;
+}
+
+.btn a:hover{
+    color: black;
+    text-decoration: none;
+}
+
+.btnSansLien{
+    padding: 2px 10px;
+}
+
+#headerUser{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+#headerUser p{
+    margin:0;
 }
 
 .content{
@@ -16,6 +59,22 @@ body{
     display: none;
 }
 
+footer{
+    position: fixed;
+    bottom: 0;
+    min-height: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+    border-top: 1px solid black;
+}
+
+footer>div{
+    text-align: center;
+}
 /*////////////////////////////// Index ////////////////////////*/
 #content_flex_index{
     display: flex;
@@ -36,13 +95,17 @@ body{
 }
 
 .caseHeure{
-    height: 30px;
     width: 80px;
+    height: 40px;
 }
 .caseHeure a{
     display: block;
     width: 100%;
     height: 100%;
+}
+
+.caseHeure a{
+    line-height: 30px;
 }
 
 .heureActivee{
@@ -78,9 +141,17 @@ body{
     background-color: red;
 }
 
-.couloirClasse{
-    width: 20px;
-    background-color: black;
+#tab_oubli_classe .couloirClasse{
+    width: 40px;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+    border-top: none;
+    border-bottom: none;
+}
+
+#tab_oubli_classe{
+    border: 2px solid black;
+    border-radius: 4px;
 }
 /*////////////////////////////// Classes ////////////////////////*/
 .ligneFormClasses{
@@ -106,15 +177,6 @@ body{
 .liChoixClasses p{
     width: max-content;
     margin: 5px 10px;
-}
-
-.liChoixClasses a{
-    text-decoration: none;
-    color: black;
-}
-
-.liChoixClasses a:hover{
-    color: blue;
 }
 
 /*////////////////// ClasseDetails ///////////////////////////*/

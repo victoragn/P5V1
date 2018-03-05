@@ -33,7 +33,9 @@ class OubliClasseType extends AbstractType
                 'data'     => $data
             ));
         }
-        $builder->add('save', SubmitType::class);
+        $builder->add('save', SubmitType::class, array(
+                'attr' => array('class' => 'animated infinite pulse btn btn-success btnSansLien')
+            ));
     }
 
     /**

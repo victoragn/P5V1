@@ -4,8 +4,8 @@
     <div id="content_flex_index">
         <div id="content_edt_sem">
             <div id="content_button_sem">
-                <button><a href="{{ path('agnez_core_homepage',{'sem' : numSem - 1}) }}">Semaine précedente</a></button>
-                <button><a href="{{ path('agnez_core_homepage',{'sem' : numSem + 1}) }}">Semaine suivante</a></button>
+                <button class='btn btn-primary'><a href="{{ path('agnez_core_homepage',{'sem' : numSem - 1}) }}">Semaine précedente</a></button>
+                <button class='btn btn-primary'><a href="{{ path('agnez_core_homepage',{'sem' : numSem + 1}) }}">Semaine suivante</a></button>
             </div>
             <div id="table_edt_sem">
                 <table>
@@ -85,6 +85,6 @@
         {% endif %}
         </div>
     </div>
-    <button><a href="{{ path('agnez_core_param') }}">Parametres</a></button>
+    <button  class='btn btn-info'><a href="{{ path('agnez_core_param') }}">Parametres</a></button>
 
 {% endblock %}

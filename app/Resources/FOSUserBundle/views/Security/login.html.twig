@@ -1,0 +1,15 @@
+{% extends "@FOSUser/layout.html.twig" %}
+
+{% block fos_user_content %}
+    <div id="container_login">
+        <h2>Bienvenue sur le logiciel de gestion de classe</h2>
+        <p>Pour profiter de l'application vous devez vous identifier :</p>
+        {{ include('@FOSUser/Security/login_content.html.twig') }}
+    </div>
+    <div id="container_link_register">
+        <p>Si vous n'avez pas d'identifiants, veuillez vous enregistrer :</p>
+        <button class="btn btn-info"><a href="{{ path('fos_user_registration_register') }}">Creer un compte</a></button>
+    </div>
+
+
+{% endblock fos_user_content %}

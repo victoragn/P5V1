@@ -25,7 +25,9 @@ class UserType extends AbstractType
                 'allow_delete'      => true,
                 'by_reference'      => false,
             ))
-            ->add('Envoyer',      SubmitType::class);
+            ->add('Envoyer',      SubmitType::class, array(
+                'attr' => array('class' => 'btn btn-success btnSansLien')
+            ));
     }/**
      * {@inheritdoc}
      */

@@ -1,7 +1,7 @@
 {% extends "@AgnezCore/layout.html.twig" %}
 
 {% block body %}
-<button><a href="{{ path('agnez_core_choixClasse') }}">Retour au choix de la classe</a></button>
+<button class="btn btn-info"><a href="{{ path('agnez_core_choixClasse') }}">Retour au choix de la classe</a></button>
 La classe en détail
 {{ form_start(form, { 'attr': {'id': 'formEleves'}}) }}
 {{ form_errors(form) }}
@@ -11,7 +11,7 @@ La classe en détail
         {{form_widget(eleve, { 'attr': {'class': 'ligneFormEleves'}}) }}
     {% endfor %}
 </div>
-<a href="#" id="add_eleve" class="btn btn-default">Ajouter un eleve</a>
+<button class="btn btn-info"><a href="#" id="add_eleve">Ajouter un eleve</a></button>
 {{ form_row(form.Envoyer)}}
 <div class="hidden">
     {{ form_rest(form) }}
