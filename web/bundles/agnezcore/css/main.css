@@ -109,11 +109,11 @@ footer>div{
 }
 
 .heureActivee{
-    background-color: deepskyblue;
+    background-color: #428bca;
 }
 
 .heureActivee a{
-    color: black;
+    color: white;
 }
 
 #tab_oubli_classe td {
@@ -131,9 +131,12 @@ footer>div{
 }
 
 .td_label_oubli label{
+    display: block;
     height: 100%;
     width: 100%;
     margin:0;
+    padding: 5px 0;
+    line-height: 20px;
     text-align: center;
 }
 

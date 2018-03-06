@@ -87,4 +87,14 @@
     </div>
     <button  class='btn btn-info'><a href="{{ path('agnez_core_param') }}">Parametres</a></button>
 
+    <script>
+        var test = document.getElementById('tab_oubli_classe');
+
+        function btnPulse(evt) {
+            var btnSave=document.getElementById('form_tabOubliClasse_save');
+            btnSave.classList.add('pulse');
+        }
+        test.addEventListener("click", btnPulse, false);
+    </script>
+
 {% endblock %}
