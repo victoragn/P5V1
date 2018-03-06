@@ -1,5 +1,5 @@
 body{
-    width: 90%;
+    width: calc(100% - 40px);
     margin: auto;
     max-width: 1200px;
     min-height: 100%;
@@ -28,7 +28,8 @@ h1{
 }
 
 .btn a{
-    padding: 3px 10px;
+    display: block;
+    padding: 4px 10px;
     box-sizing:border-box;
     color: white;
 }
@@ -80,6 +81,10 @@ footer>div{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+
+#interTab{
+    min-width: 20px;
 }
 
 #content_button_sem{
