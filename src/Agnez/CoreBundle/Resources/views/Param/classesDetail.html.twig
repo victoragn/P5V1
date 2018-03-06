@@ -53,7 +53,7 @@ La classe en détail
     }
     // La fonction qui ajoute un lien de suppression d'une catégorie
     function addDeleteLink($prototype) {
-      var $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
+      var $deleteLink = $('<a href="#" class="btn btn-danger" tabindex="-1">Supprimer</a>');
       $prototype.append($deleteLink);
       $deleteLink.click(function(e) {
         $prototype.remove();
