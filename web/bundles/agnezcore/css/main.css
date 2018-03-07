@@ -43,6 +43,11 @@ h1{
     text-decoration: none;
 }
 
+.btn:hover{
+    color: black;
+    text-decoration: none;
+}
+
 .btnSansLien{
     padding: 2px 10px;
 }
@@ -169,6 +174,24 @@ footer>div{
 #form_tabOubliClasse_save{
     margin-top: 10px;
 }
+
+/*////////////////////////////// Login ////////////////////////*/
+#container_login h2{
+    font-size: 1.5em;
+}
+
+#container_link_register{
+    margin-top: 30px;
+}
+
+#container_link_register p{
+    display: inline-block;
+}
+
+#container_links_projet{
+    margin-top: 30px;
+}
+
 /*////////////////////////////// Classes ////////////////////////*/
 .ligneFormClasses{
     margin: 10px 0;
