@@ -261,7 +261,7 @@ class DefaultController extends Controller{
                     $em->persist($classeActuelle);
                     $em->flush();
 
-                    //return $this->redirectToRoute('agnez_core_choixClasse');
+                    return $this->redirectToRoute('agnez_core_choixClasse');
                 }
             }
 
