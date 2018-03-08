@@ -28,7 +28,8 @@ class DefaultController extends Controller{
      * @Route("/{sem}/{numHeure}", name="agnez_core_homepage", requirements={"sem"="\d+","numHeure"="\d+"})
      */
     public function indexAction(Request $request, $sem=0, $numHeure=0){
-
+        $tabTypeOublis=['Cahier','Règle','Compas','Exercice','Carnet','Rapporteur'];
+        $nbTypeOublis=6;
 
         $securityContext = $this->container->get('security.authorization_checker');
         if (!$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
@@ -77,7 +78,7 @@ class DefaultController extends Controller{
                         $message=$message.'Veuillez remplir des élèves pour cette classe !';
                     }else{
                         $form=$this->createFormBuilder()
-                            ->add('tabOubliClasse', OubliClasseType::class,array('heure' =>$heureSelec))
+                            ->add('tabOubliClasse', OubliClasseType::class,array('heure' =>$heureSelec,'nbTypeOublis' =>$nbTypeOublis))
                             ->getForm();
 
                         if ($request->isMethod('POST')) {
@@ -85,56 +86,63 @@ class DefaultController extends Controller{
                             if ($form->isValid()) {
                                 $data=$form->getData()['tabOubliClasse'];
 
-                                for ($i=1;$i<=count($data);$i++){
-                                    foreach($eleves as $eleve){
-                                        if($eleve->getPlace()==$i){
-                                            $eleveTemp=$eleve;//Trouve l'eleve i et l'enregistre dans eleveTemp
+                                for ($k=1;$k<=$nbTypeOublis;$k++){
+                                    for ($i=1;$i<=count($data)/$nbTypeOublis;$i++){
+                                        foreach($eleves as $eleve){
+                                            if($eleve->getPlace()==$i){
+                                                $eleveTemp=$eleve;//Trouve l'eleve i et l'enregistre dans eleveTemp
+                                            }
+                                            $em = $this->getDoctrine()->getManager();
                                         }
-                                        $em = $this->getDoctrine()->getManager();
-                                    }
-                                    if($data['oubli'.$i]==false){
-                                        foreach($events as $event){
-                                            if($event->getEdtHeure()==$heureSelec && $event->getEleve()==$eleveTemp){
-                                                $em->remove($event);
+                                        if($data['oubli'.$k.$i]==false){
+                                            foreach($events as $event){
+                                                if($event->getEdtHeure()==$heureSelec && $event->getEleve()==$eleveTemp && $event->getType()==$k){
+                                                    $em->remove($event);
+                                                }
                                             }
                                         }
-                                    }
-                                    if($data['oubli'.$i]==true){
-                                        $eventPresent=0;
-                                        foreach($events as $event){
-                                            if($event->getEdtHeure()==$heureSelec && $event->getEleve()==$eleveTemp){
-                                                $eventPresent++;
+                                        if($data['oubli'.$k.$i]==true){
+                                            $eventPresent=0;
+                                            foreach($events as $event){
+                                                if($event->getEdtHeure()==$heureSelec && $event->getEleve()==$eleveTemp && $event->getType()==$k){
+                                                    $eventPresent++;
+                                                }
                                             }
-                                        }
-                                        if($eventPresent==0){
-                                            $nouvEvent=new Event();
-                                            $nouvEvent->setEdtHeure($heureSelec);
-                                            $nouvEvent->setEleve($eleveTemp);
-                                            $em->persist($nouvEvent);
+                                            if($eventPresent==0){
+                                                $nouvEvent=new Event();
+                                                $nouvEvent->setEdtHeure($heureSelec);
+                                                $nouvEvent->setEleve($eleveTemp);
+                                                $nouvEvent->setType($k);
+                                                $em->persist($nouvEvent);
 
+                                            }
                                         }
+                                        $em->flush();
                                     }
-                                    $em->flush();
                                 }
                             }
                         }
                         return $this->render('@AgnezCore/Default/index.html.twig', array(
-                            'listeHeures'  => $listeHeuresSem,
-                            'numSem'       => $sem,
-                            'form'         => $form->createView(),
-                            'heureSelec'   => $heureSelec,
-                            'tabEnteteSem' => $tabEnteteSem,
-                            'message'      => $message
+                            'listeHeures'   => $listeHeuresSem,
+                            'numSem'        => $sem,
+                            'form'          => $form->createView(),
+                            'heureSelec'    => $heureSelec,
+                            'tabEnteteSem'  => $tabEnteteSem,
+                            'message'       => $message,
+                            'tabTypeOublis' => $tabTypeOublis,
+                            'nbTypeOublis'  => $nbTypeOublis
                         ));
                     }
 
                 }
                 return $this->render('@AgnezCore/Default/index.html.twig', array(
-                    'listeHeures'  => $listeHeuresSem,
-                    'numSem'       => $sem,
-                    'message'      => 'Sélectionnez une heure de la semaine',
-                    'tabEnteteSem' => $tabEnteteSem,
-                    'message'      => $message
+                    'listeHeures'   => $listeHeuresSem,
+                    'numSem'        => $sem,
+                    'message'       => 'Sélectionnez une heure de la semaine',
+                    'tabEnteteSem'  => $tabEnteteSem,
+                    'message'       => $message,
+                    'tabTypeOublis' => $tabTypeOublis,
+                    'nbTypeOublis'  => $nbTypeOublis
                 ));
             }
         }

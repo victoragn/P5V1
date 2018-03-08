@@ -130,11 +130,11 @@ footer>div{
     color: white;
 }
 
-#tab_oubli_classe td {
+.tab_oubli_classe td {
     border: 1px solid black;
 }
 
-#tab_oubli_classe td input {
+.tab_oubli_classe td input {
     display: none;
 }
 
@@ -154,11 +154,11 @@ footer>div{
     text-align: center;
 }
 
-#tab_oubli_classe td input:checked + .td_label_oubli {
+.tab_oubli_classe td input:checked + .td_label_oubli {
     background-color: lightcoral;
 }
 
-#tab_oubli_classe .couloirClasse{
+.tab_oubli_classe .couloirClasse{
     width: 40px;
     border-left: 2px solid black;
     border-right: 2px solid black;
@@ -166,7 +166,7 @@ footer>div{
     border-bottom: none;
 }
 
-#tab_oubli_classe{
+.tab_oubli_classe{
     border: 2px solid black;
     border-radius: 4px;
 }

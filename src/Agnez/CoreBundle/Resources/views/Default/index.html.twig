@@ -50,6 +50,10 @@
         <div id="interTab"></div>
 
         <div id="content_oubli_classe">
+        {% for n in 1..nbTypeOublis %}
+            <button id="btn_oubli{{n}}" class="btn btn_oubli btnSansLien">{{tabTypeOublis[n-1]}}</button>
+        {% endfor %}
+
         {% if message is defined %}
             <p class="messageInfo">{{message}}</p>
         {% endif %}
@@ -57,30 +61,34 @@
         {% if form is defined %}
             {{ form_start(form) }}
             {{ form_errors(form) }}
-            <div id="tab_oubli_classe">
-                <table>
-                    <tr>
-                    {%for k in 1..30 %}
-                        {% if k <= heureSelec.classe.eleves|length %}
-                            <td>
-                                {{ form_widget(attribute(form.tabOubliClasse, 'oubli' ~ k ) ) }}
-                                <div class="td_label_oubli">{{ form_label(attribute(form.tabOubliClasse, 'oubli' ~ k ) ) }}</div>
-                            </td>
-                        {% else %}
-                            <td><div class="td_label_oubli"></div></td>
-                        {% endif %}
-
-                        {% if k is divisibleby(2)%}
-                            {% if k is divisibleby(6 )%}
-                                </tr><tr>
+            <div id="tab_oubli_classe_general">
+            {% for m in 1..nbTypeOublis %}
+                <div id="tab_oubli_classe{{m}}" class="tab_oubli_classe hidden">
+                    <table>
+                        <tr>
+                        {%for k in 1..30 %}
+                            {% if k <= heureSelec.classe.eleves|length %}
+                                <td>
+                                    {{ form_widget(attribute(form.tabOubliClasse, 'oubli' ~ m ~ k ) ) }}
+                                    <div class="td_label_oubli">{{ form_label(attribute(form.tabOubliClasse, 'oubli' ~ m ~ k ) ) }}</div>
+                                </td>
                             {% else %}
-                                <td class='couloirClasse'></td>
+                                <td><div class="td_label_oubli"></div></td>
                             {% endif %}
-                        {% endif %}
 
-                    {% endfor %}
-                    </tr>
-                </table>
+                            {% if k is divisibleby(2)%}
+                                {% if k is divisibleby(6 )%}
+                                    </tr><tr>
+                                {% else %}
+                                    <td class='couloirClasse'></td>
+                                {% endif %}
+                            {% endif %}
+
+                        {% endfor %}
+                        </tr>
+                    </table>
+                </div>
+            {% endfor %}
             </div>
             {{ form_widget(form.tabOubliClasse.save, { 'label': 'Enregistrer les oublis' }) }}
             {{ form_end(form) }}
@@ -89,8 +97,37 @@
     </div>
     <button  class='btn btn-info'><a href="{{ path('agnez_core_param') }}">Parametres</a></button>
 
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous">
+    </script>
+
     <script>
-        var tabOublis = document.getElementById('tab_oubli_classe');
+        function setCookie(name,value,days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days*24*60*60*1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+        }
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0;i < ca.length;i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            }
+            return null;
+        }
+        function eraseCookie(name) {
+            document.cookie = name+'=; Max-Age=-99999999;';
+        }
+
+        var tabOublis = document.getElementById('tab_oubli_classe_general');
 
         function btnPulse(evt) {
             var btnSave=document.getElementById('form_tabOubliClasse_save');
@@ -99,6 +136,28 @@
         if (tabOublis !== null){
             tabOublis.addEventListener("click", btnPulse, false);
         }
+
+        var nbTypeOublis={{nbTypeOublis}};
+        for(var i=1; i<=nbTypeOublis ;i++){
+            $('#btn_oubli'+i).click(function(){
+                for(var j=1; j<=nbTypeOublis ;j++){
+                    $('#tab_oubli_classe'+j).addClass('hidden');
+                    $('#btn_oubli'+j).removeClass('btn-primary');
+                }
+                var nbBtn=this.id.substr(9,1);
+                $('#tab_oubli_classe'+nbBtn).removeClass('hidden');
+                $('#btn_oubli'+nbBtn).addClass('btn-primary');
+                setCookie('nbBtnOublis',nbBtn,3);
+            });
+        }
+
+        var nbBtnOublis=getCookie('nbBtnOublis');
+        if(nbBtnOublis==null){
+            nbBtnOublis=1;
+        }
+        $('#btn_oubli'+nbBtnOublis).addClass('btn-primary');
+        $('#tab_oubli_classe'+nbBtnOublis).removeClass('hidden');
+
     </script>
 
 {% endblock %}

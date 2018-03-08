@@ -16,22 +16,25 @@ class OubliClasseType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options){
         $heure = $options['heure'];
+        $nbTypeOublis=$options['nbTypeOublis'];
         $classe=$heure->getClasse();
         $eleves=$classe->getEleves();
         $events=$heure->getEvents();
-        foreach($eleves as $eleve){
-            $data=false;
-            foreach($events as $event){
-                if($event->getEleve()==$eleve){
-                    $data=true;
+        for($k=1;$k<=$nbTypeOublis;$k++){
+            foreach($eleves as $eleve){
+                $data=false;
+                foreach($events as $event){
+                    if( $event->getEleve()==$eleve && $event->getType()==$k ){
+                        $data=true;
+                    }
                 }
-            }
 
-            $builder->add('oubli'.$eleve->getPlace(), CheckboxType::class, array(
-                'label'    => $eleve->getPrenom().' '.$eleve->getNom(),
-                'required' => false,
-                'data'     => $data
-            ));
+                $builder->add('oubli'.$k.$eleve->getPlace(), CheckboxType::class, array(
+                    'label'    => $eleve->getPrenom().' '.$eleve->getNom(),
+                    'required' => false,
+                    'data'     => $data
+                ));
+            }
         }
         $builder->add('save', SubmitType::class, array(
                 'attr' => array('class' => 'animated infinite btn btn-success btnSansLien')
@@ -43,6 +46,7 @@ class OubliClasseType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver){
         $resolver->setRequired('heure');
+        $resolver->setRequired('nbTypeOublis');
     }
 
 }
