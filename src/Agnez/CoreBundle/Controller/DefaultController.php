@@ -84,7 +84,7 @@ class DefaultController extends Controller{
                         if ($request->isMethod('POST')) {
                             $form->handleRequest($request);
                             if ($form->isValid()) {
-                                $data=$form->getData()['tabOubliClasse'];
+                                $data=$form->getData()['tabOubliClasse'];//recuperation des infos des formulaires pour chaque type d'oubli
 
                                 for ($k=1;$k<=$nbTypeOublis;$k++){
                                     for ($i=1;$i<=count($data)/$nbTypeOublis;$i++){

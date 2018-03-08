@@ -20,10 +20,10 @@ class OubliClasseType extends AbstractType
         $classe=$heure->getClasse();
         $eleves=$classe->getEleves();
         $events=$heure->getEvents();
-        for($k=1;$k<=$nbTypeOublis;$k++){
+        for($k=1;$k<=$nbTypeOublis;$k++){//ajoute autant de formulaires que de type d'oublis enregistrés
             foreach($eleves as $eleve){
                 $data=false;
-                foreach($events as $event){
+                foreach($events as $event){//pour chaque event de l'heure, verifie s'il s'agit de cet élève et de ce type d'event
                     if( $event->getEleve()==$eleve && $event->getType()==$k ){
                         $data=true;
                     }
