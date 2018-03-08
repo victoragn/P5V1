@@ -19,7 +19,7 @@ class Eleve
      * @ORM\JoinColumn(nullable=false)
      */
     private $classe;
-
+    
     /**
      * @ORM\OneToMany(targetEntity="Agnez\CoreBundle\Entity\Event", mappedBy="eleve",cascade={"all"})
      */
@@ -191,46 +191,5 @@ class Eleve
     public function getPlace()
     {
         return $this->place;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->events = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add event
-     *
-     * @param \Agnez\CoreBundle\Entity\Event $event
-     *
-     * @return Eleve
-     */
-    public function addEvent(\Agnez\CoreBundle\Entity\Event $event)
-    {
-        $this->events[] = $event;
-
-        return $this;
-    }
-
-    /**
-     * Remove event
-     *
-     * @param \Agnez\CoreBundle\Entity\Event $event
-     */
-    public function removeEvent(\Agnez\CoreBundle\Entity\Event $event)
-    {
-        $this->events->removeElement($event);
-    }
-
-    /**
-     * Get events
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getEvents()
-    {
-        return $this->events;
     }
 }

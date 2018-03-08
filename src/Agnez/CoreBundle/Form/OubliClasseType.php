@@ -18,11 +18,11 @@ class OubliClasseType extends AbstractType
         $heure = $options['heure'];
         $classe=$heure->getClasse();
         $eleves=$classe->getEleves();
-        $events=$heure->getEvents();
         foreach($eleves as $eleve){
             $data=false;
-            foreach($events as $event){
-                if($event->getEleve()==$eleve){
+            $eventsEleve=$eleve->getEvents();
+            foreach($eventsEleve as $event){
+                if($event->getEdtHeure()==$heure){
                     $data=true;
                 }
             }
