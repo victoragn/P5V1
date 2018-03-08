@@ -256,7 +256,7 @@ class DefaultController extends Controller{
                 }
             }
 
-            return $this->render('@AgnezCore/Param/ClassesDetail.html.twig', array(
+            return $this->render('@AgnezCore/Param/classesDetail.html.twig', array(
                 'form' => $form->createView(),
             ));
         }
