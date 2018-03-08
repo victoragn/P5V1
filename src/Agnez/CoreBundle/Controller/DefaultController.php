@@ -143,7 +143,7 @@ class DefaultController extends Controller{
     /**
      * @Route("/param", name="agnez_core_param")
      */
-    public function paramAction(){
+    public function paramAction(){//page d'accueil des parametres
         $securityContext = $this->container->get('security.authorization_checker');
         if (!$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirectToRoute('fos_user_security_login');
@@ -156,7 +156,7 @@ class DefaultController extends Controller{
      /**
      * @Route("/initClasses", name="agnez_core_initClasses")
      */
-    public function initClassesAction(Request $request){
+    public function initClassesAction(Request $request){//page d'ajouts et de suppression des classes de User
         $securityContext = $this->container->get('security.authorization_checker');
         if (!$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirectToRoute('fos_user_security_login');
@@ -198,7 +198,7 @@ class DefaultController extends Controller{
     /**
      * @Route("/classes", name="agnez_core_choixClasse")
      */
-    public function choixClasseAction(){
+    public function choixClasseAction(){//page de choix des classes pour y entrer les élèves
         $securityContext = $this->container->get('security.authorization_checker');
         if (!$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirectToRoute('fos_user_security_login');
@@ -215,7 +215,7 @@ class DefaultController extends Controller{
     /**
      * @Route("/classes/{id}", name="agnez_core_classeDetail")
      */
-    public function gestionClassesDetailAction(Request $request, $id){
+    public function gestionClassesDetailAction(Request $request, $id){//formulaire d'ajout d'élèves à une classe
         $securityContext = $this->container->get('security.authorization_checker');
         if (!$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirectToRoute('fos_user_security_login');
@@ -244,15 +244,24 @@ class DefaultController extends Controller{
                     $em = $this->getDoctrine()->getManager();
 
                     foreach ($originalEleves as $eleve) {
-                        if (false === $classeActuelle->getEleves()->contains($eleve)) {
-                            $em->remove($eleve);
+                        if (false === $classeActuelle->getEleves()->contains($eleve)) {//si un eleve a été supprimé
+                            $repository = $this
+                              ->getDoctrine()
+                              ->getManager()
+                              ->getRepository('AgnezCoreBundle:Event')
+                            ;
+                            $listEvents=$repository->findByEleve($eleve->getId() );
+                            foreach($listEvents as $event){//supprime les events de cet élève
+                                $em->remove($event);
+                            }
+                            $em->remove($eleve);// suprimme l'élève
                         }
                     }
 
                     $em->persist($classeActuelle);
                     $em->flush();
 
-                    return $this->redirectToRoute('agnez_core_choixClasse');
+                    //return $this->redirectToRoute('agnez_core_choixClasse');
                 }
             }
 
@@ -265,7 +274,7 @@ class DefaultController extends Controller{
     /**
      * @Route("/validClasses", name="agnez_core_validClasses")
      */
-    public function validClassesAction(){
+    public function validClassesAction(){//augmente Initialized de User s'il a valider les classes et les eleves
         $securityContext = $this->container->get('security.authorization_checker');
         if (!$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirectToRoute('fos_user_security_login');
@@ -285,7 +294,7 @@ class DefaultController extends Controller{
     /**
      * @Route("/edt", name="agnez_core_edt")
      */
-    public function gestionEdtAction(Request $request){
+    public function gestionEdtAction(Request $request){//form pour enregistrer l'edt hebdo qui sera utilisé pour initialisé l'année
         $securityContext = $this->container->get('security.authorization_checker');
         if (!$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirectToRoute('fos_user_security_login');
@@ -329,7 +338,7 @@ class DefaultController extends Controller{
      /**
      * @Route("/edt/validInit", name="agnez_core_validInitEdt")
      */
-    public function validInitEdtAction(Request $request){
+    public function validInitEdtAction(Request $request){//page de demande de validation avant d'initialiser l'année
         $securityContext = $this->container->get('security.authorization_checker');
         if (!$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirectToRoute('fos_user_security_login');
@@ -341,7 +350,7 @@ class DefaultController extends Controller{
     /**
      * @Route("/edt/init", name="agnez_core_edt_init")
      */
-    public function initEdtAction(Request $request){
+    public function initEdtAction(Request $request){//initialisation de l'année
         $securityContext = $this->container->get('security.authorization_checker');
         if (!$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirectToRoute('fos_user_security_login');
