@@ -97,8 +97,11 @@
     </div>
     <button  class='btn btn-info'><a href="{{ path('agnez_core_param') }}">Parametres</a></button>
 
+{% endblock %}
+
+{% block scripts %}
     <script>
         var nbTypeOublis={{nbTypeOublis}};
     </script>
-
+    <script src="{{ asset('bundles/agnezcore/js/index.js') }}"></script>
 {% endblock %}

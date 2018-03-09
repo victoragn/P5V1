@@ -52,3 +52,4 @@ if(typeof nbTypeOublis !== 'undefined'){
     $('#btn_oubli'+nbBtnOublis).addClass('btn-primary');
     $('#tab_oubli_classe'+nbBtnOublis).removeClass('hidden');
 }
+

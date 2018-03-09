@@ -53,7 +53,7 @@ class EdtHeure
 
     private $servicedate;
 
-       public function __construct($servicedate){
+    public function __construct($servicedate){
         $this->events = new ArrayCollection();
         $this->servicedate = $servicedate;
     }

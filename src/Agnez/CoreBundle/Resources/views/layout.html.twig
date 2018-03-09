@@ -14,8 +14,8 @@
         <meta property="og:description" content="Votre solution en ligne pour ne rien oublier avec vos élèves.">
         <meta property="og:type" content="website">
         <meta property="og:url" content="http://p5.agnezweb.fr">
-        <meta property="og:image" content="">
-        <link rel="icon" href="img/favicon.ico">
+        <meta property="og:image" content='../bundles/agnezcore/img/equerre.png'>
+        <link rel="icon" type="image/png" sizes="192x192"  href='../bundles/agnezcore/img/icon-192x192.png'>
 
         <title>{% block title %}Gestion de classe{% endblock %}</title>
 
@@ -53,7 +53,7 @@
 
     <footer>
         <div>
-            <p>Victor AGNEZ © {{ 'now'|date('Y') }}</p>
+            <p>Victor BAGNEZ © {{ 'now'|date('Y') }}</p>
         </div>
     </footer>
 
@@ -66,7 +66,7 @@
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
       crossorigin="anonymous">
     </script>
-    <script src="{{ asset_url }}"></script>
+      {% block scripts %}{% endblock %}
   {% endjavascripts %}
 
   </body>

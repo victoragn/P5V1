@@ -71,69 +71,70 @@ class DefaultController extends Controller{
                             $heureSelec=$heure;
                         }
                     }
-                    $events=$heureSelec->getEvents();
-                    $eleves=$heureSelec->getClasse()->getEleves();
+                    if(isset($heureSelec)){
+                        $events=$heureSelec->getEvents();
+                        $eleves=$heureSelec->getClasse()->getEleves();
 
-                    if(count($eleves)==0){
-                        $message=$message.'Veuillez remplir des élèves pour cette classe !';
-                    }else{
-                        $form=$this->createFormBuilder()
-                            ->add('tabOubliClasse', OubliClasseType::class,array('heure' =>$heureSelec,'nbTypeOublis' =>$nbTypeOublis))
-                            ->getForm();
+                        if(count($eleves)==0){
+                            $message=$message.'Veuillez remplir des élèves pour cette classe !';
+                        }else{
+                            $form=$this->createFormBuilder()
+                                ->add('tabOubliClasse', OubliClasseType::class,array('heure' =>$heureSelec,'nbTypeOublis' =>$nbTypeOublis))
+                                ->getForm();
 
-                        if ($request->isMethod('POST')) {
-                            $form->handleRequest($request);
-                            if ($form->isValid()) {
-                                $data=$form->getData()['tabOubliClasse'];//recuperation des infos des formulaires pour chaque type d'oubli
+                            if ($request->isMethod('POST')) {
+                                $form->handleRequest($request);
+                                if ($form->isValid()) {
+                                    $data=$form->getData()['tabOubliClasse'];//recuperation des infos des formulaires pour chaque type d'oubli
 
-                                for ($k=1;$k<=$nbTypeOublis;$k++){
-                                    for ($i=1;$i<=count($data)/$nbTypeOublis;$i++){
-                                        foreach($eleves as $eleve){
-                                            if($eleve->getPlace()==$i){
-                                                $eleveTemp=$eleve;//Trouve l'eleve i et l'enregistre dans eleveTemp
+                                    for ($k=1;$k<=$nbTypeOublis;$k++){
+                                        for ($i=1;$i<=count($data)/$nbTypeOublis;$i++){
+                                            foreach($eleves as $eleve){
+                                                if($eleve->getPlace()==$i){
+                                                    $eleveTemp=$eleve;//Trouve l'eleve i et l'enregistre dans eleveTemp
+                                                }
+                                                $em = $this->getDoctrine()->getManager();
                                             }
-                                            $em = $this->getDoctrine()->getManager();
-                                        }
-                                        if($data['oubli'.$k.$i]==false){
-                                            foreach($events as $event){
-                                                if($event->getEdtHeure()==$heureSelec && $event->getEleve()==$eleveTemp && $event->getType()==$k){
-                                                    $em->remove($event);
+                                            if($data['oubli'.$k.$i]==false){
+                                                foreach($events as $event){
+                                                    if($event->getEdtHeure()==$heureSelec && $event->getEleve()==$eleveTemp && $event->getType()==$k){
+                                                        $em->remove($event);
+                                                    }
                                                 }
                                             }
-                                        }
-                                        if($data['oubli'.$k.$i]==true){
-                                            $eventPresent=0;
-                                            foreach($events as $event){
-                                                if($event->getEdtHeure()==$heureSelec && $event->getEleve()==$eleveTemp && $event->getType()==$k){
-                                                    $eventPresent++;
+                                            if($data['oubli'.$k.$i]==true){
+                                                $eventPresent=0;
+                                                foreach($events as $event){
+                                                    if($event->getEdtHeure()==$heureSelec && $event->getEleve()==$eleveTemp && $event->getType()==$k){
+                                                        $eventPresent++;
+                                                    }
+                                                }
+                                                if($eventPresent==0){
+                                                    $nouvEvent=new Event();
+                                                    $nouvEvent->setEdtHeure($heureSelec);
+                                                    $nouvEvent->setEleve($eleveTemp);
+                                                    $nouvEvent->setType($k);
+                                                    $em->persist($nouvEvent);
+
                                                 }
                                             }
-                                            if($eventPresent==0){
-                                                $nouvEvent=new Event();
-                                                $nouvEvent->setEdtHeure($heureSelec);
-                                                $nouvEvent->setEleve($eleveTemp);
-                                                $nouvEvent->setType($k);
-                                                $em->persist($nouvEvent);
-
-                                            }
+                                            $em->flush();
                                         }
-                                        $em->flush();
                                     }
                                 }
                             }
+                            return $this->render('@AgnezCore/Default/index.html.twig', array(
+                                'listeHeures'   => $listeHeuresSem,
+                                'numSem'        => $sem,
+                                'form'          => $form->createView(),
+                                'heureSelec'    => $heureSelec,
+                                'tabEnteteSem'  => $tabEnteteSem,
+                                'message'       => $message,
+                                'tabTypeOublis' => $tabTypeOublis,
+                                'nbTypeOublis'  => $nbTypeOublis
+                            ));
                         }
-                        return $this->render('@AgnezCore/Default/index.html.twig', array(
-                            'listeHeures'   => $listeHeuresSem,
-                            'numSem'        => $sem,
-                            'form'          => $form->createView(),
-                            'heureSelec'    => $heureSelec,
-                            'tabEnteteSem'  => $tabEnteteSem,
-                            'message'       => $message,
-                            'tabTypeOublis' => $tabTypeOublis,
-                            'nbTypeOublis'  => $nbTypeOublis
-                        ));
                     }
-
                 }
                 return $this->render('@AgnezCore/Default/index.html.twig', array(
                     'listeHeures'   => $listeHeuresSem,
