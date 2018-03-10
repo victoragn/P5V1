@@ -3,34 +3,33 @@
 {% block body %}
 
 {% if app.user.initialized==4 %}
-    <button class='btn btn-primary'><a href="{{ path('agnez_core_homepage') }}">Retour à l'accueil</a></button>
+<a class='btn btn-primary' href="{{ path('agnez_core_homepage') }}">Retour à l'accueil</a>
 {% endif %}
-<button class='btn btn-info'><a href="{{ path('agnez_core_initClasses') }}">Etape précedente (Noms des classes) </a></button>
+<a class='btn btn-info' href="{{ path('agnez_core_initClasses') }}">Etape précedente (Noms des classes) </a>
   Choisissez une classe pour y entrer les élèves :
 
     <ul class="ulChoixClasses">
         {% if classes|length==0 %}
             Veuillez aller ajouter des classes pour pouvoir y ajouter des élèves
-            <button class='btn btn-info'><a href="{{ path('agnez_core_initClasses') }}">Définir les classes</a></button>
+            <a class='btn btn-info' href="{{ path('agnez_core_initClasses') }}">Définir les classes</a>
         {%endif%}
 
         {% for classe in classes %}
 
         <li class="liChoixClasses">
             <p>{{classe.name}} : {{classe.eleves|length}} élèves enregistrés</p>
-            <button class="gererClasse btn btn-info"><a href="{{ path('agnez_core_classeDetail', {'id': classe.name}) }}">Voir la classe</a></button>
+            <a class="gererClasse btn btn-info" href="{{ path('agnez_core_classeDetail', {'id': classe.name}) }}">Voir la classe</a>
         </li>
 
         {% endfor %}
     </ul>
 
-<button class='btn btn-success'>
+
     {% if app.user.initialized==1 %}
-    <a href="{{ path('agnez_core_validClasses') }}">
+    <a class='btn btn-success' href="{{ path('agnez_core_validClasses') }}">
     {% else %}
-    <a href="{{ path('agnez_core_edt') }}">
+    <a class='btn btn-success' href="{{ path('agnez_core_edt') }}">
     {% endif %}
         Etape suivante (Emploi du temps)</a>
-</button>
 
 {% endblock %}

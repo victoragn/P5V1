@@ -4,8 +4,8 @@
     <div id="content_flex_index">
         <div id="content_edt_sem">
             <div id="content_button_sem">
-                <button class='btn btn-primary'><a href="{{ path('agnez_core_homepage',{'sem' : numSem - 1}) }}">Semaine précedente</a></button>
-                <button class='btn btn-primary'><a href="{{ path('agnez_core_homepage',{'sem' : numSem + 1}) }}">Semaine suivante</a></button>
+                <a class='btn btn-primary'href="{{ path('agnez_core_homepage',{'sem' : numSem - 1}) }}">Semaine précedente</a>
+                <a class='btn btn-primary' href="{{ path('agnez_core_homepage',{'sem' : numSem + 1}) }}">Semaine suivante</a>
             </div>
             <div id="table_edt_sem">
                 <table>
@@ -51,7 +51,7 @@
 
         <div id="content_oubli_classe">
         {% for n in 1..nbTypeOublis %}
-            <button id="btn_oubli{{n}}" class="btn btn_oubli btnSansLien">{{tabTypeOublis[n-1]}}</button>
+            <button id="btn_oubli{{n}}" class="btn btn_oubli">{{tabTypeOublis[n-1]}}</button>
         {% endfor %}
 
         {% if message is defined %}
@@ -95,7 +95,7 @@
         {% endif %}
         </div>
     </div>
-    <button  class='btn btn-info'><a href="{{ path('agnez_core_param') }}">Parametres</a></button>
+    <a class='btn btn-info' href="{{ path('agnez_core_param') }}">Parametres</a>
 
 {% endblock %}
 

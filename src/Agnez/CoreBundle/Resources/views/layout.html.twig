@@ -38,8 +38,8 @@
               {% if app.request.attributes.get('_route') != 'fos_user_security_login' %}
                   {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                     <p>Bienvenue {{ app.user.username }}</p>
-                    <button class='btn btn-primary'><a href="{{ path('fos_user_profile_show') }}">Voir le profil</a></button>
-                    <button class='btn btn-primary'><a href="{{ path('fos_user_security_logout') }}">Se deconnecter</a></button>
+                    <a class='btn btn-primary' href="{{ path('fos_user_profile_show') }}">Voir le profil</a>
+                    <a class='btn btn-primary' href="{{ path('fos_user_security_logout') }}">Se deconnecter</a>
                   {% endif %}
               {% endif %}
           </div>

@@ -2,7 +2,7 @@
 
 {% block body %}
 {% if app.user.initialized==4 %}
-    <button class='btn btn-primary'><a href="{{ path('agnez_core_homepage') }}">Retour à l'accueil</a></button>
+    <a class='btn btn-primary' href="{{ path('agnez_core_homepage') }}">Retour à l'accueil</a>
 {% endif %}
   La gestion des classes
 
@@ -12,7 +12,7 @@
         {{form_widget(classe, { 'attr': {'class': 'ligneFormClasses'}}) }}
     {% endfor %}
 </div>
-<button class="btn btn-info"><a href="#" id="add_classe">Ajouter une classe</a></button>
+<a class="btn btn-info" href="#" id="add_classe">Ajouter une classe</a>
 {{ form_row(form.Envoyer)}}
 <div class="hidden">
     {{ form_rest(form) }}

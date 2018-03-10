@@ -40,7 +40,7 @@ class User2Type extends AbstractType
             }
         }
         $builder->add('save',      SubmitType::class, array(
-                'attr' => array('class' => 'btn btn-success btnSansLien')
+                'attr' => array('class' => 'btn btn-success')
         ));
     }/**
      * {@inheritdoc}

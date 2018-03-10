@@ -26,7 +26,7 @@ class Classe2Type extends AbstractType
                 'by_reference'      => false,
             ))
             ->add('Envoyer',      SubmitType::class, array(
-                'attr' => array('class' => 'btn btn-success btnSansLien')
+                'attr' => array('class' => 'btn btn-success')
             ));
     }/**
      * {@inheritdoc}

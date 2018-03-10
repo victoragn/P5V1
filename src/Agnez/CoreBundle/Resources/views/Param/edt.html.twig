@@ -1,9 +1,9 @@
 {% extends "@AgnezCore/layout.html.twig" %}
 
 {% block body %}
-<button class="btn btn-info"><a href="{{ path('agnez_core_choixClasse') }}">Retour à l'étape précedente (Ajouts des élèves)</a></button>
+<a class="btn btn-info" href="{{ path('agnez_core_choixClasse') }}">Retour à l'étape précedente (Ajouts des élèves)</a>
 {% if app.user.initialized==4 %}
-    <button class="btn btn-primary"><a href="{{ path('agnez_core_homepage') }}">Retour à l'accueil</a></button>
+    <a class="btn btn-primary" href="{{ path('agnez_core_homepage') }}">Retour à l'accueil</a>
 {% endif %}
   La gestion de l'emploi du temps
 {% set tabEntete = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi']%}
