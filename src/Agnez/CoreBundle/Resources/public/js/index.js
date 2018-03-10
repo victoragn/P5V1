@@ -1,3 +1,6 @@
+// Script de index
+//Permet la gestion de cookies pour ajouter le type d'oubli actif en cookie
+//Permet d'afficher le formulaire de l'oubli actif (et de masquer les autres)
 function setCookie(name,value,days) {
     var expires = "";
     if (days) {
