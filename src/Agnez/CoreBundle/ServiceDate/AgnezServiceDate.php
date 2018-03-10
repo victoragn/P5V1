@@ -5,7 +5,7 @@ use DateTime;
 use DatePeriod;
 use DateInterval;
 
-class AgnezServiceDate{
+class AgnezServiceDate{//service permettant de passer du systeme DateTime au systeme NumSem/NumHeure
     private $dateRentree;
     private $h11=28800;//8h
     private $h12=32400;//9h
@@ -27,13 +27,13 @@ class AgnezServiceDate{
         }
     }
 
-    public function numSem($date){
+    public function numSem($date){//trouve le numéro de semaine d'une DateTime
         $interval= $date->diff($this->dateRentree);
         $numSem=floor($interval->days /7) + 1;
         return  $numSem;
     }
 
-    public function numHeure($date){
+    public function numHeure($date){//trouve l'heure de la semaine d'une DateTime
         $date1= $this->dateRentree->format('U');
         $date2= $date->format('U');
         $interval= $date2 - $date1;
@@ -50,7 +50,7 @@ class AgnezServiceDate{
         return $result;
     }
 
-    public function getTimeByNumHeure($numHeure){
+    public function getTimeByNumHeure($numHeure){//Donne la DateTime de l'heure de la rentrée ayant ce numéro (mardi 5 septembre 10h pour l'heure 23 par exemple)
         $date= new \DateTime($this->dateRentree->format('Y-m-d'));
         for($j=1;$j<6;$j++){
             for($i=1;$i<9;$i++){
@@ -62,7 +62,7 @@ class AgnezServiceDate{
         return $date;
     }
 
-    public function getDateSem($numSem){
+    public function getDateSem($numSem){//Donne les noms des jours d'une semaine donnée (pour le tableau de gauche de index)
         $date= new \DateTime($this->dateRentree->format('Y-m-d'));
         $date->add(new DateInterval('P'.($numSem -1) * 7 .'D'));
         $result=array();

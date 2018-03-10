@@ -9,7 +9,7 @@ class AgnezServiceGetSem{
 
     }
 
-    public function getSem($user,$numSem,$repo){
+    public function getSem($user,$numSem,$repo){//donne les heures de la semaine donnée d'un User donné
         $classes=$user->getClasses();
         $listeHeures=array();
 

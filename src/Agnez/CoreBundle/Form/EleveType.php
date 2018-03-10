@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-class EleveType extends AbstractType
+class EleveType extends AbstractType //Formulaire constituant Classe2Type
 {
     /**
      * {@inheritdoc}

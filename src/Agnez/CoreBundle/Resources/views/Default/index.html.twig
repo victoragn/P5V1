@@ -7,7 +7,7 @@
                 <a class='btn btn-primary'href="{{ path('agnez_core_homepage',{'sem' : numSem - 1}) }}">Semaine précedente</a>
                 <a class='btn btn-primary' href="{{ path('agnez_core_homepage',{'sem' : numSem + 1}) }}">Semaine suivante</a>
             </div>
-            <div id="table_edt_sem">
+            <div id="table_edt_sem"><!-- Tableau contenant l'emploi du temps de User -->
                 <table>
                     <tr>
                         <th></th>
@@ -49,7 +49,7 @@
 
         <div id="interTab"></div>
 
-        <div id="content_oubli_classe">
+        <div id="content_oubli_classe"><!-- Tableau contenant les oublis dans l'heure selectionnée -->
         {% for n in 1..nbTypeOublis %}
             <button id="btn_oubli{{n}}" class="btn btn_oubli">{{tabTypeOublis[n-1]}}</button>
         {% endfor %}
@@ -67,7 +67,7 @@
                     <table>
                         <tr>
                         {%for k in 1..30 %}
-                            {% if k <= heureSelec.classe.eleves|length %}
+                            {% if attribute(form.tabOubliClasse, 'oubli' ~ m ~ k ) is defined %}
                                 <td>
                                     {{ form_widget(attribute(form.tabOubliClasse, 'oubli' ~ m ~ k ) ) }}
                                     <div class="td_label_oubli">{{ form_label(attribute(form.tabOubliClasse, 'oubli' ~ m ~ k ) ) }}</div>
@@ -91,6 +91,7 @@
             {% endfor %}
             </div>
             {{ form_widget(form.tabOubliClasse.save, { 'label': 'Enregistrer les oublis' }) }}
+            <div class="hidden">{{ form_rest(form) }}</div>
             {{ form_end(form) }}
         {% endif %}
         </div>

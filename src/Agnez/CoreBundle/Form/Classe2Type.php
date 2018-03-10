@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class Classe2Type extends AbstractType
+class Classe2Type extends AbstractType //Formulaire renvoyant la Classe contenant les élèves
 {
     /**
      * {@inheritdoc}

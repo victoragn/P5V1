@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
-class User2Type extends AbstractType
+class User2Type extends AbstractType  //Formulaire retournant l'objet User contentant le tableau hebdoEdt dans lequel se trouve l'emploi du temps hebdomadaire du User
 {
     /**
      * {@inheritdoc}

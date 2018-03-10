@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-class ClasseType extends AbstractType
+class ClasseType extends AbstractType //Formulaire faisant partie de UserType renvoyant la classe
 {
     /**
      * {@inheritdoc}

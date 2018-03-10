@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class UserType extends AbstractType
+class UserType extends AbstractType //Formulaire retournant l'objet User contentant les diiférentes classes
 {
     /**
      * {@inheritdoc}

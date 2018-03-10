@@ -15,7 +15,7 @@ class AgnezServiceInitEdt{
         $this->nombreSem=$nombreSem;
     }
 
-    public function setNewHeures($user){
+    public function setNewHeures($user){//Initialise l'EDT d'un User à partir du tableau hebdoEDT
         $classes=$user->getClasses();
         $listeHeures=array();
 
@@ -44,7 +44,7 @@ class AgnezServiceInitEdt{
         return $listeHeures;
     }
 
-    public function setPlaces($user){
+    public function setPlaces($user){//Définit les places des élèves à l'initialisation
         $classes=$user->getClasses();
         foreach ($classes as $classe){
             $eleves=$classe->getEleves();
