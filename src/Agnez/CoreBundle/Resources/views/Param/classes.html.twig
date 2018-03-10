@@ -4,7 +4,10 @@
 {% if app.user.initialized==4 %}
     <a class='btn btn-primary' href="{{ path('agnez_core_homepage') }}">Retour à l'accueil</a>
 {% endif %}
-  La gestion des classes
+<h2>La gestion des classes</h2>
+{% if app.user.initialized==0 %}
+<p>Votre compte a bien été créé. Vous allez devoir successivement enregistrer : vos classes ; vos élèves et votre emploi du temps. Commencons par les classes :</p>
+{% endif %}
 
 {{ form_start(form, { 'attr': {'id': 'formClasses'}}) }}
 <div id="agnez_userbundle_user_classes1" data-prototype="<div id=&quot;agnez_userbundle_user_classes___name__&quot; class=&quot;ligneFormClasses&quot;><div><label for=&quot;agnez_userbundle_user_classes___name___name&quot; class=&quot;required&quot;>Nom</label><input type=&quot;text&quot; id=&quot;agnez_userbundle_user_classes___name___name&quot; name=&quot;agnez_userbundle_user[classes][__name__][name]&quot; required=&quot;required&quot; /></div></div>">
