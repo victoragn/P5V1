@@ -387,7 +387,6 @@ class DefaultController extends Controller{
 
             /*Ajout des nouvelles heures*/
             $serviceinit = $this->container->get('agnez_core.serviceinitEdt');
-            $serviceinit->setPlaces( $this->getUser() );
             $listeHeures=$serviceinit->setNewHeures( $this->getUser() );
             foreach($listeHeures as $heure){
                 $em->persist($heure);

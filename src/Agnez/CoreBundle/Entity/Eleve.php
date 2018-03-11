@@ -56,8 +56,6 @@ class Eleve
     */
     private $place;
 
-
-
     /**
      * Get id
      *
@@ -150,6 +148,19 @@ class Eleve
     public function setClasse(\Agnez\CoreBundle\Entity\Classe $classe)
     {
         $this->classe = $classe;
+        if($this->place==null){
+            $eleves=$this->getClasse()->getEleves();
+            $listPlaces=array();
+            foreach($eleves as $eleve){
+                $listPlaces[]=$eleve->getPlace();
+            }
+            for($i=1;$i<=30;$i++){
+                if(!in_array($i,$listPlaces)){
+                    $this->place=$i;
+                    break;
+                }
+            }
+        }
 
         return $this;
     }
