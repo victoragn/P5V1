@@ -69,7 +69,7 @@ class AgnezServiceDate{//service permettant de passer du systeme DateTime au sys
         for($i=0;$i<5;$i++){
             date_default_timezone_set('Europe/Paris');
             setlocale(LC_TIME, 'fr_FR.utf8','fra');
-            $result[]=utf8_encode(strftime("%a %d %b", strtotime($date->format('m/d/Y')) ));
+            $result[]=strftime("%a %d %b", strtotime($date->format('m/d/Y')) );
             $date->add(new DateInterval('P1D'));
         }
 
