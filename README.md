@@ -13,12 +13,12 @@ Bienvenue dans la solution de gestion de classe
 2)Fonctionnement Général :
 --------------------------
 Certaines contraintes sont à connaître : 
-    - La date de rentrée est pour le moment fixée au 04/09/2017 : @AgnezCore/Services
-    - Le nombre de semaines dans l'année est de 40 : @AgnezCore/Services
-    - Le nombre d'élèves max est fixé à 30 : @AgnezCore/Entity/Classe. (Attention l'affichage ne peut aussi qu'en afficher 30 pour l'instant)
-    - 2 Users ne peuvent pas avoir le même pseudo ni le même email : @AgnezUser/Entity/User
-    - Un User ne peut pas avoir 2 classes ayant le même nombre : @AgnezUser/Entity/User
-    - Une classe ne peut pas avoir 2 élèves avec les mêmes nom et prénom : @AgnezCore/Entity/Eleve
+    * La date de rentrée est pour le moment fixée au 04/09/2017 : @AgnezCore/Services
+    * Le nombre de semaines dans l'année est de 40 : @AgnezCore/Services
+    * Le nombre d'élèves max est fixé à 30 : @AgnezCore/Entity/Classe. (Attention l'affichage ne peut aussi qu'en afficher 30 pour l'instant)
+    * 2 Users ne peuvent pas avoir le même pseudo ni le même email : @AgnezUser/Entity/User
+    * Un User ne peut pas avoir 2 classes ayant le même nombre : @AgnezUser/Entity/User
+    * Une classe ne peut pas avoir 2 élèves avec les mêmes nom et prénom : @AgnezCore/Entity/Eleve
 
 
 
