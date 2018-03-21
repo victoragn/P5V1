@@ -1,3 +1,27 @@
+Bienvenue dans la solution de gestion de classe
+===============================================
+
+1)Installation en local :
+-------------------------
+- Copier le dossier P5 ci-dessous dans le dossier de votre server web local (exemple : C:/wamp/www).
+- Lancer la console dans ce nouveau dossier P5.
+- Tapez "php composer.phar install" dasn la console (composer doit être installé). Cela va ajouter les vendors.
+- Tapez "php bin/console doctrine:database:create" pour créer votre Base De Données.
+- Tapez "php bin/console doctrine:schema:update --dump-sql" puis "php bin/console doctrine:schema:update --force" pour créer les tables de la BDD.
+- L'application est prête.
+
+2)Fonctionnement Général :
+--------------------------
+Certaines contraintes sont à connaître : 
+    - La date de rentrée est pour le moment fixée au 04/09/2017 : @AgnezCore/Services
+    - Le nombre de semaines dans l'année est de 40 : @AgnezCore/Services
+    - Le nombre d'élèves max est fixé à 30 : @AgnezCore/Entity/Classe. (Attention l'affichage ne peut aussi qu'en afficher 30 pour l'instant)
+    - 2 Users ne peuvent pas avoir le même pseudo ni le même email : @AgnezUser/Entity/User
+    - Un User ne peut pas avoir 2 classes ayant le même nombre : @AgnezUser/Entity/User
+    - Une classe ne peut pas avoir 2 élèves avec les mêmes nom et prénom : @AgnezCore/Entity/Eleve
+
+
+
 Symfony Standard Edition
 ========================
 
