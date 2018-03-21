@@ -6,13 +6,21 @@ body{
     display: flex;
     flex-direction: column;
 }
+.btn{
+    padding: 2px 10px;
+    margin: 3px 0;
+    box-sizing: border-box;
+}
+.btn:hover{
+    color: black;
+    text-decoration: none;
+}
 
 h1{
     font-family: 'Slabo 27px', serif;
     font-size: 3.5em;
     color: black;
 }
-
 #header{
     display: flex;
     flex-direction: row;
@@ -20,41 +28,17 @@ h1{
     border-bottom: 1px solid black;
     margin-bottom: 30px;
 }
-
-#header a{
-    text-decoration: none;
-}
-
-.btn{
-    padding: 2px 10px;
-    margin: 3px 0;
-    box-sizing: border-box;
-}
-
-.btn:hover{
-    color: black;
-    text-decoration: none;
-}
-
+#header a{text-decoration: none;}
 #headerUser{
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
 }
+#headerUser p{margin:0;}
 
-#headerUser p{
-    margin:0;
-}
+.hidden{display: none;}
+#mainContainer{flex-grow: 1;}
 
-.content{
-}
-
-.hidden{
-    display: none;
-}
-#mainContainer{
-    flex-grow: 1;
-}
 footer{
     min-height: 50px;
     display: flex;
@@ -66,20 +50,15 @@ footer{
     border-top: 1px solid black;
 }
 
-footer>div{
-    text-align: center;
-}
+footer>div{text-align: center;}
+
 /*////////////////////////////// Index ////////////////////////*/
 #content_flex_index{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
-
-#interTab{
-    min-width: 20px;
-}
-
+#interTab{min-width: 20px;}
 #content_button_sem{
     display: flex;
     flex-direction: row;
@@ -91,7 +70,6 @@ footer>div{
     text-align: center;
     padding: 5px;
 }
-
 .caseHeure{
     width: 80px;
     height: 40px;
@@ -100,34 +78,20 @@ footer>div{
     display: block;
     width: 100%;
     height: 100%;
-}
-
-.caseHeure a{
     line-height: 30px;
 }
 
-.heureActivee{
-    background-color: #428bca;
-}
+.heureActivee{background-color: #428bca;}
+.heureActivee a{color: white;}
 
-.heureActivee a{
-    color: white;
-}
-
-.tab_oubli_classe td {
-    border: 1px solid black;
-}
-
-.tab_oubli_classe td input {
-    display: none;
-}
+.tab_oubli_classe td {border: 1px solid black;}
+.tab_oubli_classe td input {display: none;}
 
 .td_label_oubli{
     height: 50px;
     width: 80px;
     overflow: hidden;
 }
-
 .td_label_oubli label{
     display: block;
     height: 100%;
@@ -154,37 +118,18 @@ footer>div{
     border: 2px solid black;
     border-radius: 4px;
 }
-
-#form_tabOubliClasse_save{
-    margin-top: 10px;
-}
+#form_tabOubliClasse_save{margin-top: 10px;}
 
 /*////////////////////////////// Login ////////////////////////*/
-#container_login h2{
-    font-size: 1.5em;
-}
-
-#container_link_register{
-    margin-top: 30px;
-}
-
-#container_link_register p{
-    display: inline-block;
-}
-
-#container_links_projet{
-    margin-top: 30px;
-}
-
+#container_login h2{font-size: 1.5em;}
+#container_link_register{margin-top: 30px;}
+#container_link_register p{display: inline-block;}
+#container_links_projet{margin-top: 30px;}
 #diagClasses{
     border: 1px solid black;
     max-width: 600px;
 }
-
-#diagClasses img{
-    max-width: 580px;
-}
-
+#diagClasses img{max-width: 580px;}
 #diagClasses figcaption{
     text-align: center;
     border-top: 1px solid black;
@@ -192,13 +137,8 @@ footer>div{
 }
 
 /*////////////////////////////// Classes ////////////////////////*/
-.ligneFormClasses{
-    margin: 10px 0;
-}
-
-.ligneFormClasses>div{
-    display: inline-block;
-}
+.ligneFormClasses{margin: 10px 0;}
+.ligneFormClasses>div{display: inline-block;}
 
 /*////////////////////////////// ChoixClasses ///////////////////////*/
 .liChoixClasses{
@@ -211,17 +151,12 @@ footer>div{
     margin: 5px;
     padding: 5px;
 }
-
 .liChoixClasses p{
     width: max-content;
     margin: 5px 10px;
 }
 
 /*////////////////// ClasseDetails ///////////////////////////*/
-#agnez_userbundle_classe_eleves{
-
-}
-
 .ligneFormEleves{
     margin: 10px 0;
     border : 1px solid black;
@@ -229,10 +164,7 @@ footer>div{
     min-width: 51%;
     padding: 5px;
 }
-
-.ligneFormEleves>div{
-    display: inline-block;
-}
+.ligneFormEleves>div{display: inline-block;}
 
 /*////////////////// Init EDT ///////////////////////////*/
 #table_edt_init td,#table_edt_init th{
@@ -247,5 +179,3 @@ footer>div{
     height: 3px;
     background-color: black;
 }
-
-
