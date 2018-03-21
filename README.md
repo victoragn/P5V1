@@ -5,9 +5,10 @@ Bienvenue dans la solution de gestion de classe
 -------------------------
 - Copier le dossier P5 ci-dessous dans le dossier de votre server web local (exemple : C:/wamp/www).
 - Lancer la console dans ce nouveau dossier P5.
-- Tapez "php composer.phar install" dasn la console (composer doit être installé). Cela va ajouter les vendors.
+- Tapez "php composer.phar install" dans la console (composer doit être installé). Cela va ajouter les vendors.
 - Tapez "php bin/console doctrine:database:create" pour créer votre Base De Données.
 - Tapez "php bin/console doctrine:schema:update --dump-sql" puis "php bin/console doctrine:schema:update --force" pour créer les tables de la BDD.
+- Importer la base de données gestionclasse.sql dans phpMyAdmin.
 - L'application est prête.
 
 2)Fonctionnement Général :
