@@ -47,6 +47,9 @@ class DefaultController extends Controller{
                 return $this->redirectToRoute('agnez_core_edt');
             }
             if($this->getUser()->getInitialized()==3){// si le user a deja init les classes il va vers la page de choix des classes
+                return $this->redirectToRoute('agnez_core_oublis');
+            }
+            if($this->getUser()->getInitialized()==4){// si le user a deja init les classes il va vers la page de choix des classes
                 return $this->redirectToRoute('agnez_core_validInitEdt');
             }
 

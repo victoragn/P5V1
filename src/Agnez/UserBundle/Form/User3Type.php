@@ -25,6 +25,7 @@ class User3Type extends AbstractType  //Formulaire retournant la liste des oubli
                     ->add($i, TextType::class,array(
                         'required'   => false,
                         'label_format' => $i,
+                        'data' => $valOublis,
                          ));
         }
         $builder->add('save',      SubmitType::class, array(
