@@ -42,7 +42,7 @@ class User extends BaseUser
      * @ORM\Column(name="listeOublis", type="array", nullable=true)
      */
     private $listeOublis;
-
+    
     /**
      * @Assert\Valid
      * @ORM\OneToMany(targetEntity="Agnez\CoreBundle\Entity\Classe", mappedBy="user",cascade={"all"})
@@ -130,29 +130,5 @@ class User extends BaseUser
     public function getInitialized()
     {
         return $this->initialized;
-    }
-
-    /**
-     * Set listeOublis
-     *
-     * @param array $listeOublis
-     *
-     * @return User
-     */
-    public function setListeOublis($listeOublis)
-    {
-        $this->listeOublis = $listeOublis;
-
-        return $this;
-    }
-
-    /**
-     * Get listeOublis
-     *
-     * @return array
-     */
-    public function getListeOublis()
-    {
-        return $this->listeOublis;
     }
 }
