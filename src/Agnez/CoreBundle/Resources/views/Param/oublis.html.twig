@@ -1,0 +1,25 @@
+{% extends "@AgnezCore/layout.html.twig" %}
+
+{% block body %}
+<a class="btn btn-info" href="{{ path('agnez_core_edt') }}">Retour à l'étape précedente (Emploi du temps)</a>
+{% if app.user.initialized==5 %}
+    <a class="btn btn-primary" href="{{ path('agnez_core_homepage') }}">Retour à l'accueil</a>
+{% endif %}
+  La liste des oublis à enregistrer
+
+{{ form_start(form) }}
+<div id="liste_oublis">
+
+    {% for j in  0..9 %}
+    <div class='itemOublis'><label>Type d'uubli n°{{j+1}}</label>
+        {{form_widget( attribute(form.listeOublis, j) )}}
+    </div>
+    {% endfor %}
+</div>
+{{form_widget(form.listeOublis.save, { 'label': 'Enregistrer la liste d\' oublis '}) }}
+<div class="hidden">
+    {{ form_rest(form) }}
+</div>
+{{ form_end(form, {'render_rest': false}) }}
+
+{% endblock %}

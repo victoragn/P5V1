@@ -11,6 +11,7 @@ use Agnez\CoreBundle\Form\Classe2Type;
 use Agnez\CoreBundle\Form\OubliClasseType;
 use Agnez\UserBundle\Form\UserType;
 use Agnez\UserBundle\Form\User2Type;
+use Agnez\UserBundle\Form\User3Type;
 use Agnez\CoreBundle\Entity\Classe;
 use Agnez\CoreBundle\Entity\Event;
 use Agnez\CoreBundle\Entity\EdtHeure;
@@ -189,7 +190,7 @@ class DefaultController extends Controller{
                             $em->remove($classe);
                         }
                     }
-                    if($user->getInitialized()!=4){/*si le compte n'a jamais été initialisé jusqu'au bout*/
+                    if($user->getInitialized()!=5){/*si le compte n'a jamais été initialisé jusqu'au bout*/
                         $user->setInitialized(1);
                     }
                     $em->persist($user);
@@ -289,7 +290,7 @@ class DefaultController extends Controller{
             return $this->redirectToRoute('fos_user_security_login');
         }else{
             $user=$this->getUser();
-            if($user->getInitialized()!=4){/*si le compte n'a jamais été initialisé jusqu'au bout*/
+            if($user->getInitialized()!=5){/*si le compte n'a jamais été initialisé jusqu'au bout*/
                         $user->setInitialized(2);
                     }
             $em = $this->getDoctrine()->getManager();
@@ -324,8 +325,51 @@ class DefaultController extends Controller{
                 if ($form->isValid()) {
                     $data=$form->getData();
                     $user->setHebdoEDT($data);
-                    if($user->getInitialized()!=4){/*si le compte n'a jamais été initialisé jusqu'au bout*/
+                    if($user->getInitialized()!=5){/*si le compte n'a jamais été initialisé jusqu'au bout*/
                         $user->setInitialized(3);
+                    }
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($user);
+                    $em->flush();
+
+                    return $this->redirectToRoute('agnez_core_oublis');
+
+                }
+            }
+
+
+            return $this->render('@AgnezCore/Param/edt.html.twig', array(
+                'form' => $form->createView(),
+            ));
+        }
+    }
+
+    /**
+     * @Route("/oublis", name="agnez_core_oublis")
+     */
+    public function gestionOublisAction(Request $request){//form pour enregistrer l'edt hebdo qui sera utilisé pour initialisé l'année
+        $securityContext = $this->container->get('security.authorization_checker');
+        if (!$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirectToRoute('fos_user_security_login');
+        }else{
+
+            $user = $this->getUser();
+            $listeOublis=array();
+            if( !empty($user->getListeOublis()) ){
+                $listeOublis=$user->getListeOublis();
+            }
+            var_dump($listeOublis);
+            $form=$this->createFormBuilder()
+                ->add('listeOublis', User3Type::class,array('current_user' => $user))
+                ->getForm();
+
+            if ($request->isMethod('POST')) {
+                $form->handleRequest($request);
+                if ($form->isValid()) {
+                    $data=$form->getData();
+                    $user->setListeOublis($data);
+                    if($user->getInitialized()!=5){/*si le compte n'a jamais été initialisé jusqu'au bout*/
+                        $user->setInitialized(4);
                     }
                     $em = $this->getDoctrine()->getManager();
 
@@ -338,7 +382,7 @@ class DefaultController extends Controller{
             }
 
 
-            return $this->render('@AgnezCore/Param/edt.html.twig', array(
+            return $this->render('@AgnezCore/Param/oublis.html.twig', array(
                 'form' => $form->createView(),
             ));
         }
@@ -391,7 +435,7 @@ class DefaultController extends Controller{
             foreach($listeHeures as $heure){
                 $em->persist($heure);
             }
-            $user->setInitialized(4);
+            $user->setInitialized(5);
             $em->persist($user);
             $em->flush();
 
