@@ -1,0 +1,18 @@
+{% extends "@AgnezCore/layout.html.twig" %}
+
+{% block title %}
+    Erreur !
+{% endblock%}
+
+{% block body %}
+
+        <h1>Une erreur s'est produite</h1>
+        <h2>Le server a retourné "{{ status_code }} {{ status_text }}".</h2>
+
+        <div>
+            Nous sommes désolé de ce problème. Veuillez revenir à l'accueil svp.
+            <a class='btn btn-primary' href="{{ path('agnez_core_homepage') }}">Retour à l'accueil</a>
+        </div>
+
+
+{% endblock %}
