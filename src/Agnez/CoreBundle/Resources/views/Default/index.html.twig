@@ -50,8 +50,10 @@
         <div id="interTab"></div>
 
         <div id="content_oubli_classe"><!-- Tableau contenant les oublis dans l'heure selectionnée -->
-        {% for n in 1..nbTypeOublis %}
+        {% for n in 1..10 %}
+            {% if tabTypeOublis[n-1] is not empty%}
             <button id="btn_oubli{{n}}" class="btn btn_oubli">{{tabTypeOublis[n-1]}}</button>
+            {% endif %}
         {% endfor %}
 
         {% if message is defined %}
@@ -104,5 +106,5 @@
     <script>
         var nbTypeOublis={{nbTypeOublis}};
     </script>
-    <script src="{{ asset('bundles/agnezcore/js/index.js') }}"></script>
+    <script src="{{ asset_url }}"></script>
 {% endblock %}

@@ -29,27 +29,35 @@ class DefaultController extends Controller{
      * @Route("/{sem}/{numHeure}", name="agnez_core_homepage", requirements={"sem"="\d+","numHeure"="\d+"})
      */
     public function indexAction(Request $request, $sem=0, $numHeure=0){
-        $tabTypeOublis=['Cahier','Règle','Compas','Exercice','Carnet','Rapporteur'];
-        $nbTypeOublis=6;
+        //$tabTypeOublis=['Cahier','Règle','Compas','Exercice','Carnet','Rapporteur'];
+        $nbTypeOublis=10;
 
         $securityContext = $this->container->get('security.authorization_checker');
         if (!$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirectToRoute('fos_user_security_login');
         }else{
+            $user = $this->getUser();
+            $tabTypeOublis=$user->getListeOublis()['listeOublis'];
+            $nbTypeOublis=0;
+            for($i=0;$i<10;$i++){
+                if( !is_null($tabTypeOublis[$i]) ){
+                    $nbTypeOublis++;
+                }
+            }
 
-            if($this->getUser()->getInitialized()==0){// si le user n'a pas initialisé une premiere fois va vers la page de creation des classes
+            if($user->getInitialized()==0){// si le user n'a pas initialisé une premiere fois va vers la page de creation des classes
                 return $this->redirectToRoute('agnez_core_initClasses');
             }
-            if($this->getUser()->getInitialized()==1){// si le user a deja init les classes il va vers la page de choix des classes
+            if($user->getInitialized()==1){// si le user a deja init les classes il va vers la page de choix des classes
                 return $this->redirectToRoute('agnez_core_choixClasse');
             }
-            if($this->getUser()->getInitialized()==2){// si le user a deja init les classes il va vers la page de choix des classes
+            if($user->getInitialized()==2){// si le user a deja init les classes il va vers la page de choix des classes
                 return $this->redirectToRoute('agnez_core_edt');
             }
-            if($this->getUser()->getInitialized()==3){// si le user a deja init les classes il va vers la page de choix des classes
+            if($user->getInitialized()==3){// si le user a deja init les classes il va vers la page de choix des classes
                 return $this->redirectToRoute('agnez_core_oublis');
             }
-            if($this->getUser()->getInitialized()==4){// si le user a deja init les classes il va vers la page de choix des classes
+            if($user->getInitialized()==4){// si le user a deja init les classes il va vers la page de choix des classes
                 return $this->redirectToRoute('agnez_core_validInitEdt');
             }
 
