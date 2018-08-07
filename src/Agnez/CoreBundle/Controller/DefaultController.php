@@ -369,7 +369,7 @@ class DefaultController extends Controller{
             if( !empty($user->getListeOublis()) ){
                 $listeOublis=$user->getListeOublis();
             }
-            var_dump($listeOublis);
+
             $form=$this->createFormBuilder()
                 ->add('listeOublis', User3Type::class,array('current_user' => $user))
                 ->getForm();
